@@ -29,7 +29,7 @@ function memberful_wp_plugin_migrate_db() {
       );
 
     if ( $result === false ) {
-      echo 'Could not create the memberful mapping table\n';
+      echo 'Could not create the memberful mapping table. Please email info@memberful.com.';
       $wpdb->print_error();
       exit();
     }
@@ -91,11 +91,6 @@ function memberful_wp_menu() {
   add_options_page( 'Memberful', 'Memberful', 'manage_options', 'memberful_options', 'memberful_wp_options' );
 }
 
-
-/**
- * Enqueues the Memberful admin screen CSS, only on the settings page.
- * Hooked on admin_enqueue_scripts.
- */
 function memberful_wp_admin_enqueue_scripts() {
   $screen = get_current_screen();
 
@@ -111,6 +106,13 @@ function memberful_wp_admin_enqueue_scripts() {
       MEMBERFUL_VERSION
     );
   }
+
+  wp_enqueue_script(
+    'memberful-menu',
+    plugins_url( 'js/menu.js', dirname( __FILE__ ) ),
+    array('jquery'),
+    MEMBERFUL_VERSION
+  );
 }
 
 /**
@@ -119,16 +121,18 @@ function memberful_wp_admin_enqueue_scripts() {
 function memberful_wp_register() {
   $vars = array();
 
-  if ( ! empty( $_POST['activation_code'] ) ) {
-    $activation = memberful_wp_activate( $_POST['activation_code'] );
+  if ( isset( $_POST['activation_code'] ) ) {
+    if ( ! empty( $_POST['activation_code'] ) ) {
+      $activation = memberful_wp_activate( $_POST['activation_code'] );
 
-    if ( $activation === TRUE ) {
-      update_option( 'memberful_embed_enabled', TRUE );
-      memberful_wp_sync_downloads();
-      memberful_wp_sync_subscription_plans();
-    }
-    else {
-      Memberful_Wp_Reporting::report( $activation, 'error' );
+      if ( $activation === TRUE ) {
+        update_option( 'memberful_embed_enabled', TRUE );
+        memberful_wp_sync_downloads();
+        memberful_wp_sync_subscription_plans();
+      }
+      else {
+        Memberful_Wp_Reporting::report( $activation, 'error' );
+      }
     }
 
     return wp_redirect( admin_url( 'options-general.php?page=memberful_options' ) );
@@ -258,7 +262,7 @@ function memberful_wp_options() {
 
   if ( ! empty( $_GET['subpage'] ) ) {
     switch ( $_GET['subpage'] ) {
-    case 'bulk_protect': 
+    case 'bulk_protect':
       return memberful_wp_bulk_protect();
     case 'debug':
       return memberful_wp_debug();
@@ -319,7 +323,7 @@ function memberful_wp_activate( $code ) {
   }
 
   if ( $response_code !== 200 || empty( $response_body ) ) {
-    return new WP_Error( 'memberful_activation_fail', "We couldn't connect to Memberful, please email info@memberful.com" );
+    return new WP_Error( 'memberful_activation_fail', "We couldn't connect to Memberful, please email info@memberful.com." );
   }
 
   $credentials = json_decode( $response_body );
