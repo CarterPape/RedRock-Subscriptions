@@ -4,13 +4,13 @@ Tags: memberful, member, membership, memberships, recurring payments, recurring 
 Requires at least: 3.6
 Tested up to: 5.2
 Stable tag: 1.48.0
-License: GPLv2 or later
+License: GPLv3 or later
 
 Sell memberships and restrict access to content with WordPress and Memberful.
 
 == Description ==
 
-A reliable WordPress membership plugin that integrates your site with [Memberful](https://memberful.com). Memberful is a service for selling subscriptions to your website with [Stripe](https://stripe.com).
+A WordPress membership plugin that integrates your site with [Memberful](https://memberful.com), with plugin edits by The Times-Independent. Memberful is a service for selling subscriptions to your website with [Stripe](https://stripe.com). The Times-Independent is a newspaper in Moab, Utah.
 
 Features include:
 
