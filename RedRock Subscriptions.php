@@ -1,12 +1,9 @@
 <?php
 /*
-Plugin Name: Memberful WP
-Plugin URI: http://github.com/memberful/memberful-wp
+Plugin Name: RedRock Subscriptions
 Description: Sell memberships and restrict access to content with WordPress and Memberful.
-Version: 1.48.0
-Author: Memberful
-Author URI: http://memberful.com
-License: GPLv2 or later
+Author: Carter Pape
+Author URI: http://carterpape.com/
  */
 
 if ( ! defined( 'MEMBERFUL_VERSION' ) )
@@ -95,7 +92,7 @@ register_deactivation_hook( __FILE__, 'memberful_wp_plugin_deactivate' );
 
 function memberful_extend_auth_cookie_expiration( $expirein ) {
   if ( get_option( 'memberful_extend_auth_cookie_expiration' ) ) {
-    return 60 * 60 * 24 * 365; // 1 year
+    return (60 * 60 * 24 * 7) * 8; // 8 weeks
   } else {
     return $expirein;
   }
