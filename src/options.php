@@ -8,7 +8,7 @@ function memberful_wp_all_options() {
         'memberful_site' => NULL,
         'memberful_api_key' => NULL,
         'memberful_webhook_secret' => NULL,
-        'memberful_products' => array(),
+        'memberful_downloads' => array(),
         'memberful_subscriptions' => array(),
         'memberful_embed_enabled' => FALSE,
         'memberful_error_log' => array(),

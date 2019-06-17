@@ -50,8 +50,8 @@ function memberful_wp_shortcode_account_link($atts, $content) {
 }
 
 function memberful_wp_shortcode_download_link($atts, $content) {
-    if (! empty($atts['product']))
-        $atts['download'] = $atts['product'];
+    if (! empty($atts['download']))
+        $atts['download'] = $atts['download'];
 
     if (empty($atts['download']))
         return $content;
@@ -64,16 +64,16 @@ function memberful_wp_normalize_shortcode_args($atts) {
         $atts['has_subscription_to'] = $atts['has_subscription'];
     }
 
-    if (! empty($atts['has_product'])) {
-        $atts['has_download'] = $atts['has_product'];
+    if (! empty($atts['has_download'])) {
+        $atts['has_download'] = $atts['has_download'];
     }
 
     if (! empty($atts['does_not_have_subscription'])) {
         $atts['does_not_have_subscription_to'] = $atts['does_not_have_subscription'];
     }
 
-    if (! empty($atts['does_not_have_product'])) {
-        $atts['does_not_have_download'] = $atts['does_not_have_product'];
+    if (! empty($atts['does_not_have_download'])) {
+        $atts['does_not_have_download'] = $atts['does_not_have_download'];
     }
 
     return $atts;

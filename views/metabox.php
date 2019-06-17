@@ -1,7 +1,7 @@
-<?php if (! empty($subscriptions) || ! empty($products)) : ?>
+<?php if (! empty($subscriptions) || ! empty($downloads)) : ?>
     <div class="memberful-restrict-access-options">
         <h4 style="font-size: 13px;"><?php _e('Who has access?', 'memberful'); ?></h4>
-        <?php memberful_wp_render('acl_selection', compact('subscriptions', 'products', 'viewable_by_any_registered_users')); ?>
+        <?php memberful_wp_render('acl_selection', compact('subscriptions', 'downloads', 'viewable_by_any_registered_users')); ?>
     </div>
     <div class="memberful-marketing-content">
         <?php
@@ -20,6 +20,6 @@
     </div>
 <?php else: ?>
     <div>
-        <p><em><?php _e("We couldn't find any products or subscriptions in your Memberful account. You'll need to add some before you can restrict access.", 'memberful'); ?></em></p>
+        <p><em><?php _e("We couldn't find any downloads or subscriptions in your Memberful account. You'll need to add some before you can restrict access.", 'memberful'); ?></em></p>
     </div>
 <?php endif; ?>

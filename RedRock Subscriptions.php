@@ -2,8 +2,8 @@
 /*
 Plugin Name: RedRock Subscriptions
 Description: Sell memberships and restrict access to content with WordPress and Memberful.
-Author: Carter Pape
-Author URI: http://carterpape.com/
+Author: The Times-Independent
+Author URI: http://moabtimes.com/
  */
 
 if (! defined('MEMBERFUL_VERSION'))
@@ -48,7 +48,6 @@ require_once MEMBERFUL_DIR . '/src/api.php';
 require_once MEMBERFUL_DIR . '/src/roles.php';
 require_once MEMBERFUL_DIR . '/src/syncing.php';
 require_once MEMBERFUL_DIR . '/src/logout_hooks.php';
-require_once MEMBERFUL_DIR . '/src/contrib/bbpress.php';
 require_once MEMBERFUL_DIR . '/vendor/reporting.php';
 require_once MEMBERFUL_DIR . '/src/private_user_feed.php';
 require_once MEMBERFUL_DIR . '/src/comments_protection.php';
@@ -80,7 +79,6 @@ if (in_array('wp-ultimate-recipe-premium/wp-ultimate-recipe-premium.php', apply_
 
 function memberful_wp_plugin_activate() {
     add_option('memberful_wp_activation_redirect' , true);
-    memberful_clear_obsolete_cron_jobs();
 }
 register_activation_hook(__FILE__, 'memberful_wp_plugin_activate');
 
@@ -89,11 +87,11 @@ function memberful_wp_plugin_deactivate() {
 }
 register_deactivation_hook(__FILE__, 'memberful_wp_plugin_deactivate');
 
-function memberful_extend_auth_cookie_expiration($expirein) {
+function memberful_extend_auth_cookie_expiration($expireIn) {
     if (get_option('memberful_extend_auth_cookie_expiration')) {
-        return (60 * 60 * 24 * 7) * 8; // 8 weeks
+        return WEEK_IN_SECONDS * 8;
     } else {
-        return $expirein;
+        return $expireIn;
     }
 }
 add_filter('auth_cookie_expiration', 'memberful_extend_auth_cookie_expiration');

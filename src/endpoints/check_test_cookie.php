@@ -1,6 +1,6 @@
 <?php
 
-class Memberful_Wp_Endpoint_Check_Test_Cookie implements Memberful_Wp_Endpoint {
+class Memerful_WP_Endpoint_Check_Test_Cookie implements Memerful_WP_Endpoint {
     public function verify_request($request_method) {
         return $request_method === 'GET';
     }

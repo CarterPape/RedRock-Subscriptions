@@ -32,7 +32,7 @@ function memberful_wp_endpoint_filter() {
 /**
  * Extracts the endpoint (if any) that the user is trying to access
  *
- * @return Memberful_Wp_Endpoint
+ * @return Memerful_WP_Endpoint
  */
 function memberful_wp_endpoint_for_request() {
     $endpoint = NULL;
@@ -40,19 +40,19 @@ function memberful_wp_endpoint_for_request() {
     if (! empty($_GET['memberful_endpoint'])) {
         switch(strtolower($_GET['memberful_endpoint'])) {
         case 'auth':
-            $endpoint = new Memberful_Wp_Endpoint_Auth;
+            $endpoint = new Memerful_WP_Endpoint_Auth;
             break;
         case 'set_test_cookie':
-            $endpoint = new Memberful_Wp_Endpoint_Set_Test_Cookie;
+            $endpoint = new Memerful_WP_Endpoint_Set_Test_Cookie;
             break;
         case 'check_test_cookie':
-            $endpoint = new Memberful_Wp_Endpoint_Check_Test_Cookie;
+            $endpoint = new Memerful_WP_Endpoint_Check_Test_Cookie;
             break;
         case 'webhook':
-            $endpoint = new Memberful_Wp_Endpoint_Webhook;
+            $endpoint = new Memerful_WP_Endpoint_Webhook;
             break;
         case 'debug':
-            $endpoint = new Memberful_Wp_Endpoint_Debug;
+            $endpoint = new Memerful_WP_Endpoint_Debug;
             break;
         }
     }
@@ -60,7 +60,7 @@ function memberful_wp_endpoint_for_request() {
     return $endpoint;
 }
 
-interface Memberful_Wp_Endpoint {
+interface Memerful_WP_Endpoint {
     /**
      * Allow the endpoint to process the request
      */

@@ -1,10 +1,10 @@
 <?php
 
 function memberful_download($slug) {
-    $products = memberful_downloads();
+    $downloads = memberful_downloads();
     $id       = memberful_wp_extract_id_from_slug($slug);
 
-    return empty($products[$id]) ? NULL : $products[$id];
+    return empty($downloads[$id]) ? NULL : $downloads[$id];
 }
 
 function memberful_subscription_plan($slug) {
@@ -57,6 +57,7 @@ function memberful_wp_fetch_entities($url) {
     }
 
     if ($response['response']['code'] != 200 OR ! isset($response['body'])) {
+        error_log(print_r($response, true));
         return new WP_Error('memberful_sync_fail', "Couldn't retrieve list of entities from Memberful.");
     }
 

@@ -5,7 +5,7 @@
  *
  * This endpoint should handle GET requests
  */
-class Memberful_Wp_Endpoint_Auth implements Memberful_Wp_Endpoint {
+class Memerful_WP_Endpoint_Auth implements Memerful_WP_Endpoint {
 
     /**
      * Checks that the request to this endpoint is acceptable

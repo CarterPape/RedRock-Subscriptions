@@ -34,7 +34,7 @@
             </fieldset>
         </div>
         <div>
-        <?php memberful_wp_render('metabox', compact('subscriptions', 'products', 'marketing_content')); ?>
+        <?php memberful_wp_render('metabox', compact('subscriptions', 'downloads', 'marketing_content')); ?>
     </div>
         <?php memberful_wp_nonce_field('memberful_options'); ?>
     </form>

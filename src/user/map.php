@@ -34,11 +34,9 @@ class Memberful_User_Map {
             return $this->add_data_to_wp_error($result_of_precondition_check, compact('member'));
         }
 
-        $existing_wp_user = (
-                                $mapping_from_member['user'] !== FALSE
-                                    ? $mapping_from_member['user']
-                                    : $existing_user_with_members_email
-        );
+        $existing_wp_user = $mapping_from_member['user'] !== FALSE
+            ? $mapping_from_member['user']
+            : $existing_user_with_members_email;
         
         $wp_user_existed_before_request = ($existing_wp_user !== FALSE);
 

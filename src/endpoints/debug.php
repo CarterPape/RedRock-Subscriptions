@@ -1,6 +1,6 @@
 <?php
 
-class Memberful_Wp_Endpoint_Debug implements Memberful_Wp_Endpoint {
+class Memerful_WP_Endpoint_Debug implements Memerful_WP_Endpoint {
     public function verify_request($request_method) {
         if (!is_ssl())
             return false;

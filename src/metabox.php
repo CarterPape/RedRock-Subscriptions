@@ -144,8 +144,8 @@ function memberful_wp_save_postdata($post_id) {
  */
 class Memberful_Post_ACL {
     // This is left over from deprecating
-    // When the plugin hits 2.0 write a converter for product -> download
-    const DOWNLOAD = 'product';
+    // When the plugin hits 2.0 write a converter for download -> download
+    const DOWNLOAD = 'download';
     const SUBSCRIPTION = 'subscription';
 
     protected $_entity;

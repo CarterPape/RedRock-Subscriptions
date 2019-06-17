@@ -1,6 +1,6 @@
 <?php
 
-class Memberful_Wp_User_Role_Decision {
+class Memerful_WP_User_Role_Decision {
     public static function ensure_user_role_is_correct(WP_User $user) {
         $decision = self::build();
 
@@ -8,7 +8,7 @@ class Memberful_Wp_User_Role_Decision {
     }
 
     public static function build(array $extra_roles_memberful_is_allowed_to_change_from = array()) {
-        return new Memberful_Wp_User_Role_Decision(
+        return new Memerful_WP_User_Role_Decision(
             get_option('memberful_role_active_customer', 'subscriber'),
             get_option('memberful_role_inactive_customer', 'subscriber'),
             get_option('default_role', 'subscriber'),
@@ -36,12 +36,14 @@ class Memberful_Wp_User_Role_Decision {
     }
 
     public function role_for_user($current_role, $current_subscriptions) {
-        $is_active = ! empty($current_subscriptions);
+        $is_active = !empty($current_subscriptions);
 
-        if (! in_array($current_role, $this->roles_memberful_is_allowed_to_change_from)) {
+        if (!in_array($current_role, $this->roles_memberful_is_allowed_to_change_from)) {
             return $current_role;
         }
 
-        return $is_active ? $this->active_role : $this->inactive_role;
+        return $is_active
+            ? $this->active_role
+            : $this->inactive_role;
     }
 }

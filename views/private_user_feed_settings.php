@@ -11,7 +11,7 @@
 ?>
                             <div id="memberful-private-user-feed-subscription-list">
                                 <h3><?php _e('Enable private user RSS feeds', 'memberful'); ?></h3>
-                                <p><?php _e("Provide a private RSS feed of <strong>ALL POSTS</strong> for active subscribers to these Subscription Plans:", 'memberful'); ?></p>
+                                <p><?php _e("Provide a private RSS feed of <strong>ALL POSTS</strong> for active subscribers to these subscription plans:", 'memberful'); ?></p>
                                 <ul>
 <?php
                                     foreach ($subscription_plans as $id => $subscription) {
@@ -36,7 +36,7 @@
                         }
                         else {
 ?>
-                            <p class="memberful-private-feed-error"><?php _e("There are no available Subscription Plans.", 'memberful'); ?></p>
+                            <p class="memberful-private-feed-error"><?php _e("There are no available subscription plans.", 'memberful'); ?></p>
 <?php
                         }
 ?>

@@ -20,15 +20,15 @@
             </ul>
         </div>
     <?php endif; ?>
-    <?php if (! empty($products)) : ?>
+    <?php if (! empty($downloads)) : ?>
         <div id="memberful-downloads" class="memberful-acl-block">
             <p class="memberful-access-label"><?php _e('Anybody who owns:', 'memberful'); ?></p>
             <ul>
-            <?php foreach($products as $id => $product): ?>
+            <?php foreach($downloads as $id => $download): ?>
                 <li>
                     <label>
-                        <input type="checkbox" name="memberful_product_acl[]" value="<?php echo $id; ?>" <?php checked($product['checked']); ?>>
-                        <?php echo esc_html($product['name']); ?>
+                        <input type="checkbox" name="memberful_download_acl[]" value="<?php echo $id; ?>" <?php checked($download['checked']); ?>>
+                        <?php echo esc_html($download['name']); ?>
                     </label>
                 </li>
             <?php endforeach; ?>

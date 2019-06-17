@@ -10,7 +10,7 @@ function memberful_wp_sync_member_from_memberful($member_id, $mapping_context = 
     if (is_wp_error($account)) {
         memberful_wp_record_error(array(
             'error'  => $account->get_error_messages()
-    ));
+        ));
 
         return $account;
     }
@@ -31,20 +31,20 @@ function memberful_wp_sync_member_account($account, $mapping_context) {
 
     $user = $mapper->map($account->member, $mapping_context);
 
-    if (! is_wp_error($user)) {
+    if (!is_wp_error($user)) {
         if (isset($account->member->deleted)) {
             if (memberful_is_safe_to_delete($user)) {
                 wp_delete_user($user->ID);
                 Memberful_User_Mapping_Repository::delete_mapping($user->ID);
             } else {
-                Memberful_Wp_User_Downloads::sync($user->ID, array());
-                Memberful_Wp_User_Subscriptions::sync($user->ID, array());
-                Memberful_Wp_User_Role_Decision::ensure_user_role_is_correct($user);
+                Memerful_WP_User_Downloads::sync($user->ID, array());
+                Memerful_WP_User_Subscriptions::sync($user->ID, array());
+                Memerful_WP_User_Role_Decision::ensure_user_role_is_correct($user);
             }
         } else {
-            Memberful_Wp_User_Downloads::sync($user->ID, $account->products);
-            Memberful_Wp_User_Subscriptions::sync($user->ID, $account->subscriptions);
-            Memberful_Wp_User_Role_Decision::ensure_user_role_is_correct($user);
+            Memerful_WP_User_Downloads::sync($user->ID, $account->downloads);
+            Memerful_WP_User_Subscriptions::sync($user->ID, $account->subscriptions);
+            Memerful_WP_User_Role_Decision::ensure_user_role_is_correct($user);
         }
         $wpdb->query("COMMIT");
     } else {

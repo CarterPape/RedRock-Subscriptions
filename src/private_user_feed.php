@@ -23,7 +23,7 @@ function memberful_private_user_feed_init() {
     // Extract the token from the URL
     $feedUserToken = substr($_SERVER['REQUEST_URI'],
         strpos($_SERVER['REQUEST_URI'], memberful_private_user_feed_get_url_identifier())
-        + strlen(memberful_private_user_feed_get_url_identifier())
+            + strlen(memberful_private_user_feed_get_url_identifier())
     );
 
     $requiredPlan = memberful_private_user_feed_settings_get_required_plan();
@@ -52,8 +52,9 @@ function memberful_private_user_feed_init() {
     // In case somebody actually maps this with their plugin with a hook, we still need to get the first one.
     $user = array_shift($users);
 
-    if (!is_subscribed_to_memberful_plan($requiredPlan, $user->ID))
+    if (!is_subscribed_to_memberful_plan($requiredPlan, $user->ID)) {
         return;
+    }
 
     // Everything is in order, we'll deliver the feed.
     memberful_private_user_feed_deliver();

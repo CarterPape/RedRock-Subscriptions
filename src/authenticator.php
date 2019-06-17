@@ -76,7 +76,10 @@ class Memberful_Authenticator {
 
             $account = $this->get_member_data($tokens->access_token);
 
-            $user = memberful_wp_sync_member_account($account,  array('refresh_token' => $tokens->refresh_token));
+            $user = memberful_wp_sync_member_account(
+                $account,
+                array('refresh_token' => $tokens->refresh_token)
+            );
 
             if (is_wp_error($user)) {
                 if ($user->get_error_code() === 'user_already_exists') {
@@ -214,6 +217,9 @@ class Memberful_Authenticator {
         }
 
         $body = json_decode($response['body']);
+        
+        $body->downloads = $body->products;
+        
         $code = $response['response']['code'];
 
         if ($code != 200 OR $body === NULL) {

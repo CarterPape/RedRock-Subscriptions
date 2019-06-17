@@ -5,8 +5,7 @@ require_once MEMBERFUL_DIR . '/src/acl/free_membership.php';
 /**
  * Determines the set of post IDs that the current user cannot access
  *
- * If a page/post requires products a,b then the user will be granted access
- * to the content if they have bought either product a or b
+ * If a page/post requires access to two downloads (a and or b), then the user will be granted access to the content if they have bought access to either download a or b.
  *
  * TODO: This is calculated on every page load, maybe use a cache?
  *
@@ -18,29 +17,26 @@ function memberful_wp_user_disallowed_post_ids($user_id) {
     $user_id        = (int) $user_id;
     $user_signed_in = $user_id !== 0;
 
-    if (isset($ids[$user_id]))
+    if (isset($ids[$user_id])) {
         return $ids[$user_id];
+    }
 
-    $global_product_acl             = isset($acl['product']) ? $acl['product'] : array();
+    $global_download_acl             = isset($acl['download']) ? $acl['download'] : array();
     $global_subscription_acl        = isset($acl['subscription']) ? $acl['subscription'] : array();
     $posts_for_any_registered_users = redrock_subscriptions_get_free_posts();
 
     // Items the user has access to
-    $user_products = memberful_wp_user_downloads($user_id);
+    $user_downloads = memberful_wp_user_downloads($user_id);
     $user_subs     = memberful_wp_user_plans_subscribed_to($user_id);
 
     // Work out the set of posts the user is and isn't allowed to access
-    $user_product_acl      = memberful_wp_generate_user_specific_acl_from_global_acl($user_products, $global_product_acl);
+    $user_download_acl      = memberful_wp_generate_user_specific_acl_from_global_acl($user_downloads, $global_download_acl);
     $user_subscription_acl = memberful_wp_generate_user_specific_acl_from_global_acl($user_subs, $global_subscription_acl);
 
-    $user_allowed_posts    = array_merge($user_product_acl['allowed'],    $user_subscription_acl['allowed']);
-    // At this point we dont know if the user is signed in, so assume they're not & that they can't access
-    // "registered users only" posts
-    $user_restricted_posts = array_merge($user_product_acl['restricted'], $user_subscription_acl['restricted'], $posts_for_any_registered_users);
-
-    // Remove the set of posts a user can access from the set they can't.
-    // If a post requires 1 of 2 subscriptions, and a member only has 1 of them
-    // then the post will be in the restricted set and the allowed set
+    $user_allowed_posts    = array_merge($user_download_acl['allowed'],    $user_subscription_acl['allowed']);
+    
+    $user_restricted_posts = array_merge($user_download_acl['restricted'], $user_subscription_acl['restricted'], $posts_for_any_registered_users);
+    
     $posts_user_is_not_allowed_to_access = array_diff($user_restricted_posts, $user_allowed_posts);
 
     if ($user_signed_in) {
@@ -51,10 +47,10 @@ function memberful_wp_user_disallowed_post_ids($user_id) {
 }
 
 /**
- * Given a set of products/subscriptions that the member has, and the corresponding
- * product/subscription acl for the site, work out what posts they can view.
+ * Given a set of downloads/subscriptions that the member has, and the corresponding
+ * download/subscription acl for the site, work out what posts they can view.
  *
- * @param  array $users_entities An array of ids (either product ids or subscription ids) in form id => id.
+ * @param  array $users_entities An array of ids (either download ids or subscription ids) in form id => id.
  * @param  array $acl            Global acl for the entity type.
  * @return
  */
@@ -84,12 +80,12 @@ function memberful_wp_generate_user_specific_acl_from_global_acl($users_entities
 }
 
 /**
- * Gets the array of products the member with $member_id owns
+ * Gets the array of downloads the member with $member_id owns
  *
- * @return array member's products
+ * @return array member's downloads
  */
 function memberful_wp_user_downloads($user_id) {
-    return get_user_meta($user_id, 'memberful_product', TRUE);
+    return get_user_meta($user_id, 'memberful_download', TRUE);
 }
 
 /**
@@ -133,7 +129,7 @@ function memberful_wp_user_has_subscription_to_plans($user_id, array $required_p
 }
 
 /**
- * Check that the specified user has at least one of a set of products
+ * Check that the specified user has at least one of a set of downloads
  *
  * @param int   $user_id   The id of the wordpress user
  * @param array $downloads Ids of the downloads to check the user has

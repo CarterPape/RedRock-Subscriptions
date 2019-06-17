@@ -1,6 +1,6 @@
 <?php
 
-abstract class Memberful_Wp_User_Entity {
+abstract class Memerful_WP_User_Entity {
     protected $entities;
     protected $user_id;
 

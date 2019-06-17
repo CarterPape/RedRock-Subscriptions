@@ -24,8 +24,10 @@ function memberful_api_member($member_id) {
     if (200 !== $response_code OR empty($response_body)) {
         return new WP_Error('memberful_fail', 'Could not get member info from api');
     }
-
-    return json_decode($response_body);
+    
+    $account = json_decode($response_body);
+    
+    return $account;
 }
 
 function memberful_wp_get_data_from_api($url) {

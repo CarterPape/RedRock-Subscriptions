@@ -283,14 +283,14 @@ function memberful_wp_options() {
         }
     }
 
-    $products = get_option('memberful_products', array());
+    $downloads = get_option('memberful_downloads', array());
     $subscriptions = get_option('memberful_subscriptions', array());
     $extend_auth_cookie_expiration = get_option('memberful_extend_auth_cookie_expiration');
 
     memberful_wp_render (
         'options',
         array(
-            'products' => $products,
+            'downloads' => $downloads,
             'subscriptions' => $subscriptions,
             'extend_auth_cookie_expiration' => $extend_auth_cookie_expiration
      )
@@ -386,13 +386,13 @@ function memberful_wp_advanced_settings() {
 function memberful_wp_bulk_protect() {
     if (!empty($_POST)) {
         $categories_to_protect           = empty($_POST['memberful_protect_categories']) ? array() : (array) $_POST['memberful_protect_categories'];
-        $acl_for_products                = empty($_POST['memberful_product_acl']) ? array() : (array) $_POST['memberful_product_acl'];
+        $acl_for_downloads                = empty($_POST['memberful_download_acl']) ? array() : (array) $_POST['memberful_download_acl'];
         $acl_for_subscriptions           = empty($_POST['memberful_subscription_acl']) ? array() : (array) $_POST['memberful_subscription_acl'];
         $marketing_content               = empty($_POST['memberful_marketing_content']) ? '' : $_POST['memberful_marketing_content'];
         $things_to_protect               = empty($_POST['target_for_restriction']) ? '' : $_POST['target_for_restriction'];
         $viewable_by_any_registered_user = empty($_POST['memberful_viewable_by_any_registered_users']) ? '' : $_POST['memberful_viewable_by_any_registered_users'];
 
-        $product_acl_manager   = new Memberful_Post_ACL('product');
+        $download_acl_manager   = new Memberful_Post_ACL('download');
         $subscription_acl_manager = new Memberful_Post_ACL('subscription');
 
 
@@ -417,7 +417,7 @@ function memberful_wp_bulk_protect() {
         $query = new WP_Query($query_params);
 
         foreach($query->posts as $id) {
-            $product_acl_manager->set_acl($id, $acl_for_products);
+            $download_acl_manager->set_acl($id, $acl_for_downloads);
             $subscription_acl_manager->set_acl($id, $acl_for_subscriptions);
             if (!empty($marketing_content)) {
                 memberful_wp_update_post_marketing_content($id, $marketing_content);
@@ -434,7 +434,7 @@ function memberful_wp_bulk_protect() {
     memberful_wp_render(
         'bulk_protect',
         array(
-            'products' => memberful_wp_metabox_acl_format(array(), 'product'),
+            'downloads' => memberful_wp_metabox_acl_format(array(), 'download'),
             'subscriptions' => memberful_wp_metabox_acl_format(array(), 'subscription'),
             'marketing_content' => '',
             'form_target'       => memberful_wp_plugin_bulk_protect_url(TRUE),

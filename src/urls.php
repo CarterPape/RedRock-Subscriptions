@@ -33,7 +33,7 @@ function memberful_account_get_download_url($download_slug) {
 }
 
 function memberful_admin_member_url($member_id, $format = MEMBERFUL_HTML) {
-    return memberful_url('admin/members/'.$member_id, $format);
+    return memberful_url('admin/members/' . $member_id, $format);
 }
 
 function memberful_admin_downloads_url($format = MEMBERFUL_HTML) {
@@ -44,12 +44,8 @@ function memberful_admin_subscription_plans_url($format = MEMBERFUL_HTML) {
     return memberful_url('admin/subscriptions', $format);
 }
 
-function memberful_admin_product_url($product_id, $format = MEMBERFUL_HTML) {
-    return memberful_admin_download_url($product_id, $format);
-}
-
 function memberful_admin_download_url($download_id, $format = MEMBERFUL_HTML) {
-    return memberful_url('admin/products/'.(int) $download_id, $format);
+    return memberful_url('admin/downloads/' . (int) $download_id, $format);
 }
 
 function memberful_order_completed_url($order) {
@@ -65,7 +61,7 @@ function memberful_gift_url($plan_id) {
 }
 
 function memberful_checkout_for_download_url($download_id) {
-    return add_query_arg('product', $download_id, memberful_url('checkout'));
+    return add_query_arg('download', $download_id, memberful_url('checkout'));
 }
 
 function memberful_wp_plugin_settings_url($no_header = FALSE, $subpage='') {
@@ -109,7 +105,7 @@ function memberful_url($uri = '', $format = MEMBERFUL_HTML) {
         $endpoint .= '.' . $format;
     }
 
-    return rtrim(get_option('memberful_site'),'/') . $endpoint;
+    return rtrim(get_option('memberful_site'), '/') . $endpoint;
 }
 
 // Private generator methods

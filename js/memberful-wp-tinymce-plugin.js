@@ -115,7 +115,7 @@
         insertCheckoutLinkDialog(
             editor,
             {
-                label: "Plan to subscribe to",
+                label: "Subscription plan",
                 choices: window.MemberfulData.plans,
                 onSubmit: handleDialogSubmit
             }
@@ -134,7 +134,7 @@
             {
                 choices: window.MemberfulData.plans,
                 dialogTitle: "Link to gift",
-                label: "Plan",
+                label: "Subscription plan",
                 onSubmit: handleDialogSubmit,
             }
         );
@@ -169,7 +169,7 @@
             var menu = [];
 
             if (window.MemberfulData.plans.length > 0) {
-                menu.push({text: 'Buy Plan', onclick: function() { insertSubscriptionCheckoutLink(editor); }});
+                menu.push({text: 'Buy Subscription', onclick: function() { insertSubscriptionCheckoutLink(editor); }});
             }
 
             menu.push({text: 'Sign in link', onclick: function() { insertSignInShortcode(editor); }});
