@@ -1,7 +1,7 @@
 <?php
 
-add_action('add_meta_boxes', 'memberful_wp_add_metabox');
-add_action('save_post', 'memberful_wp_save_postdata');
+// add_action('add_meta_boxes', 'memberful_wp_add_metabox');
+// add_action('save_post', 'memberful_wp_save_postdata');
 
 
 function memberful_wp_metabox_types() {

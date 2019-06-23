@@ -27,32 +27,15 @@ if (!defined('MEMBERFUL_EMBED_HOST'))
 if (!defined('MEMBERFUL_SSL_VERIFY'))
     define('MEMBERFUL_SSL_VERIFY', TRUE);
 
-require_once MEMBERFUL_DIR . '/src/core-ext.php';
-require_once MEMBERFUL_DIR . '/src/cron.php';
-require_once MEMBERFUL_DIR . '/src/urls.php';
-require_once MEMBERFUL_DIR . '/src/user/map.php';
-require_once MEMBERFUL_DIR . '/src/user/meta.php';
-require_once MEMBERFUL_DIR . '/src/user/role_decision.php';
-require_once MEMBERFUL_DIR . '/src/authenticator.php';
-require_once MEMBERFUL_DIR . '/src/admin.php';
-require_once MEMBERFUL_DIR . '/src/admin/editor.php';
-require_once MEMBERFUL_DIR . '/src/acl.php';
-require_once MEMBERFUL_DIR . '/src/shortcodes.php';
-require_once MEMBERFUL_DIR . '/src/widgets.php';
-require_once MEMBERFUL_DIR . '/src/endpoints.php';
-require_once MEMBERFUL_DIR . '/src/marketing_content.php';
-require_once MEMBERFUL_DIR . '/src/content_filter.php';
-require_once MEMBERFUL_DIR . '/src/entities.php';
-require_once MEMBERFUL_DIR . '/src/embed.php';
-require_once MEMBERFUL_DIR . '/src/api.php';
-require_once MEMBERFUL_DIR . '/src/roles.php';
-require_once MEMBERFUL_DIR . '/src/syncing.php';
-require_once MEMBERFUL_DIR . '/src/logout_hooks.php';
+foreach (glob(MEMBERFUL_DIR . "/src/*.php") as $filename) {
+    require_once $filename;
+}
+
 require_once MEMBERFUL_DIR . '/vendor/reporting.php';
-require_once MEMBERFUL_DIR . '/src/private_user_feed.php';
-require_once MEMBERFUL_DIR . '/src/comments_protection.php';
-require_once MEMBERFUL_DIR . '/src/nav_menus.php';
-require_once MEMBERFUL_DIR . '/src/apple-pay-verification.php';
+
+foreach (glob(MEMBERFUL_DIR . "/classes/*.php") as $filename) {
+    require_once $filename;
+}
 
 function memberful_wp_plugin_activate() {
     add_option('memberful_wp_activation_redirect' , true);

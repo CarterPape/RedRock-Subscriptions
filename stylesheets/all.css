@@ -1,0 +1,35 @@
+#zip-code-form {
+  text-align: center;
+}
+#zip-code-form #zip-code-input {
+  width: 9em;
+}
+#zip-code-form #zip-form-error-text {
+  margin-top: 0.5em;
+  color: #CC0000;
+}
+
+#paywall {
+  position: absolute;
+  left: -9876543px;
+  right: -9876543px;
+  margin: auto;
+  width: 100vw;
+  min-height: 75vh;
+  padding-top: 2em;
+  background-color: #DDD;
+  background-image: linear-gradient(135deg, white 0%, white 50%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%), linear-gradient(-135deg, white 0%, white 50%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%), linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 13%, rgba(0, 0, 0, 0.17) 41%, rgba(0, 0, 0, 0.06) 50%, rgba(0, 0, 0, 0.01) 80%, rgba(0, 0, 0, 0) 100%);
+  background-position: top center, top center, top center;
+  background-size: 0.5em 0.5em, 0.5em 0.5em, 100% 2em;
+  background-repeat: repeat-x;
+}
+#paywall #footer-background {
+  z-index: -2;
+  position: fixed;
+  height: 50vh;
+  background-color: #ddd;
+  bottom: 0;
+  width: 100vw;
+}
+
+/*# sourceMappingURL=all.css.map */

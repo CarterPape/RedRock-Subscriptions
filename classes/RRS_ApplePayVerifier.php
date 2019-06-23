@@ -1,10 +1,5 @@
 <?php
 
-if (class_exists('RRS_ApplePayVerifier')) {
-    new RRS_ApplePayVerifier;
-    return;
-}
-
 class RRS_ApplePayVerifier {
     public function __construct() {
         add_action('plugins_loaded', array($this, 'show_apple_pay_domain_verification_file'));
