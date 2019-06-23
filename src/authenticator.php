@@ -8,7 +8,7 @@ class Memberful_Authenticator {
      * @return string URL
      */
     static public function oauth_member_url($action = '') {
-        return memberful_url('oauth/'.$action);
+        return Plugin::defaultInstance()->getPluginURL()('oauth/'.$action);
     }
 
     /**

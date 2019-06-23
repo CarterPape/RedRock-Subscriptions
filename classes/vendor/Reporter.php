@@ -1,6 +1,6 @@
 <?php
 
-if (!class_exists('Memberful_WP_Reporting')) :
+namespace RedRockSubscriptions;
 
 /**
  * An object for storing transient errors
@@ -9,7 +9,7 @@ if (!class_exists('Memberful_WP_Reporting')) :
  * @author Matt Button (Memberful)
  * @license GPL
  */
-class Memberful_WP_Reporting {
+class Reporter {
 
 	/**
 	 * Record a message for the user in transient storage
@@ -20,7 +20,7 @@ class Memberful_WP_Reporting {
 	 * @param  string             $user_login    The user login for the user setting the message.
 	 */
 	public static function report($message, $type = 'success', $code = '', $user_login = '') {
-		$instance = new Memberful_WP_Reporting($user_login);
+		$instance = new Reporter($user_login);
 
 		$instance->record($message, $type, $code);
 	}
@@ -32,7 +32,7 @@ class Memberful_WP_Reporting {
 	 * @param string $user_login
 	 */
 	public static function pop($user_login = '') {
-		$instance = new Memberful_WP_Reporting($user_login);
+		$instance = new Reporter($user_login);
 
 		$value = $instance->get();
 
@@ -57,7 +57,7 @@ class Memberful_WP_Reporting {
 
 	/**
 	 * @param  string             $user_login    The user login for the user setting the message.
-	 * @return Memberful_WP_Reporting
+	 * @return Reporter
 	 */
 	public function __construct($user_login = '') {
 		// Get the user login value
@@ -141,5 +141,3 @@ class Memberful_WP_Reporting {
 		return apply_filters('Memberful_WP_Reporting__build_key', $key, $user_login);
 	}
 }
-
-endif;

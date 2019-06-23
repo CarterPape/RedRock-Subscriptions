@@ -1,5 +1,5 @@
 <?php
-require_once MEMBERFUL_DIR.'/src/user/entity.php';
+require_once Plugin::defaultInstance()->getPluginDir().'/src/user/entity.php';
 
 /**
  * Interface for interacting with a user's downloads

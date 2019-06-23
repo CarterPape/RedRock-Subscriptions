@@ -1,5 +1,5 @@
 <?php
-require MEMBERFUL_DIR . '/src/user/entity.php';
+require Plugin::defaultInstance()->getPluginDir() . '/src/user/entity.php';
 
 class Memerful_WP_User_Downloads extends Memerful_WP_User_Entity { 
 

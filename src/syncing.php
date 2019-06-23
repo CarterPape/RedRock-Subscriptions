@@ -1,6 +1,6 @@
 <?php
-require_once MEMBERFUL_DIR.'/src/user/downloads.php';
-require_once MEMBERFUL_DIR.'/src/user/subscriptions.php';
+require_once Plugin::defaultInstance()->getPluginDir().'/src/user/downloads.php';
+require_once Plugin::defaultInstance()->getPluginDir().'/src/user/subscriptions.php';
 
 function memberful_wp_sync_member_from_memberful($member_id, $mapping_context = array()) {
     $member_id = (int) $member_id;

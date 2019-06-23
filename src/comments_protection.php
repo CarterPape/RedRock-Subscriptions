@@ -15,7 +15,7 @@ function memberful_comments_protection_template_redirect() {
 }
 
 function memberful_comments_protection_comments_template() {
-    return MEMBERFUL_DIR . '/views/comments-template.php';
+    return Plugin::defaultInstance()->getPluginDir() . '/views/comments-template.php';
 }
 
 /**

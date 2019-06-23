@@ -112,9 +112,9 @@ if (!class_exists('Memberful_WP_Profile_Widget')) {
         if (true === $add_stylesheet) {
             wp_enqueue_style(
                 'memberful-wp-profile-widget',
-                MEMBERFUL_URL . '/stylesheets/widget.css',
+                Plugin::defaultInstance()->getPluginURL() . '/stylesheets/widget.css',
                 array(),
-                MEMBERFUL_VERSION
+                Plugin::defaultInstance()->getPluginVersion()
          );
         }
     }

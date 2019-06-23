@@ -1,5 +1,5 @@
 <?php
-require MEMBERFUL_DIR.'/src/user/map_stats.php';
+require Plugin::defaultInstance()->getPluginDir().'/src/user/map_stats.php';
 
 function memberful_wp_all_options() {
     return array(

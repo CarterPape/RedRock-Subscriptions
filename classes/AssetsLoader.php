@@ -1,7 +1,9 @@
 <?php
 
-class RRS_AssetsLoader {
-    function __construct() {
+namespace RedRockSubscriptions;
+
+class AssetsLoader implements DoesPluginSetup {
+    function doPluginSetup() {
         add_action("wp_enqueue_scripts", array(this, "enqueueStyle");
         add_action("wp_enqueue_scripts", array(this, "enqueueZipCodeJS");
     }
@@ -21,5 +23,3 @@ class RRS_AssetsLoader {
         );
     }
 }
-
-new RRS_AssetsLoader;

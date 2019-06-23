@@ -1,7 +1,9 @@
 <?php
 
-require_once MEMBERFUL_DIR . '/src/options.php';
-require_once MEMBERFUL_DIR . '/src/metabox.php';
+namespace RedRockSubscriptions;
+
+require_once Plugin::defaultInstance()->getPluginDir() . '/src/options.php';
+require_once Plugin::defaultInstance()->getPluginDir() . '/src/metabox.php';
 
 add_action('admin_head',            'memberful_wp_announce_plans_and_download_in_head');
 add_action('admin_menu',            'memberful_wp_menu');
@@ -103,7 +105,7 @@ function memberful_wp_admin_enqueue_scripts() {
             'memberful-admin',
             plugins_url('js/admin.js', dirname(__FILE__)),
             array('jquery'),
-            MEMBERFUL_VERSION
+            Plugin::defaultInstance()->getPluginVersion()
         );
     }
 
@@ -111,7 +113,7 @@ function memberful_wp_admin_enqueue_scripts() {
         'memberful-menu',
         plugins_url('js/menu.js', dirname(__FILE__)),
         array('jquery'),
-        MEMBERFUL_VERSION
+        Plugin::defaultInstance()->getPluginVersion()
     );
 }
 
@@ -131,7 +133,7 @@ function memberful_wp_register() {
                 memberful_wp_sync_subscription_plans();
             }
             else {
-                Memberful_WP_Reporting::report($activation, 'error');
+                Reporter::report($activation, 'error');
             }
         }
 
@@ -234,13 +236,13 @@ function memberful_wp_options() {
 
         if (isset($_POST['manual_sync'])) {
             if (is_wp_error($error = memberful_wp_sync_downloads())) {
-                Memberful_WP_Reporting::report($error, 'error');
+                Reporter::report($error, 'error');
 
                 return wp_redirect(admin_url('options-general.php?page=memberful_options'));
             }
 
             if (is_wp_error($error = memberful_wp_sync_subscription_plans())) {
-                Memberful_WP_Reporting::report($error, 'error');
+                Reporter::report($error, 'error');
 
                 return wp_redirect(admin_url('options-general.php?page=memberful_options'));
             }
@@ -359,9 +361,9 @@ function memberful_wp_advanced_settings() {
 
             memberful_wp_update_customer_roles($current_active_role, $new_active_role, $current_inactive_role, $new_inactive_role);
 
-            Memberful_WP_Reporting::report(__('Settings updated'));
+            Reporter::report(__('Settings updated'));
         } else {
-            Memberful_WP_Reporting::report(__('The roles you chose aren\'t in the list of allowed roles'), 'error');
+            Reporter::report(__('The roles you chose aren\'t in the list of allowed roles'), 'error');
         }
 
         wp_redirect(memberful_wp_plugin_advanced_settings_url());

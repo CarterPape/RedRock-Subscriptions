@@ -1,6 +1,6 @@
 <?php
-require_once MEMBERFUL_DIR . '/src/acl/helpers.php';
-require_once MEMBERFUL_DIR . '/src/acl/free_membership.php';
+require_once Plugin::defaultInstance()->getPluginDir() . '/src/acl/helpers.php';
+require_once Plugin::defaultInstance()->getPluginDir() . '/src/acl/free_membership.php';
 
 /**
  * Determines the set of post IDs that the current user cannot access

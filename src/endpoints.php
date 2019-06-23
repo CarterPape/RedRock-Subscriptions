@@ -4,11 +4,11 @@
  * directly with the plugin
  */
 
-require MEMBERFUL_DIR . '/src/endpoints/auth.php';
-require MEMBERFUL_DIR . '/src/endpoints/check_test_cookie.php';
-require MEMBERFUL_DIR . '/src/endpoints/debug.php';
-require MEMBERFUL_DIR . '/src/endpoints/set_test_cookie.php';
-require MEMBERFUL_DIR . '/src/endpoints/webhook.php';
+require Plugin::defaultInstance()->getPluginDir() . '/src/endpoints/auth.php';
+require Plugin::defaultInstance()->getPluginDir() . '/src/endpoints/check_test_cookie.php';
+require Plugin::defaultInstance()->getPluginDir() . '/src/endpoints/debug.php';
+require Plugin::defaultInstance()->getPluginDir() . '/src/endpoints/set_test_cookie.php';
+require Plugin::defaultInstance()->getPluginDir() . '/src/endpoints/webhook.php';
 
 add_action('wp_loaded', 'memberful_wp_endpoint_filter');
 

@@ -4,55 +4,111 @@ Plugin Name: RedRock Subscriptions
 Description: Sell memberships and restrict access to content with WordPress and Memberful.
 Author: The Times-Independent
 Author URI: http://moabtimes.com/
- */
+*/
 
-if (!defined('MEMBERFUL_VERSION'))
-    define('MEMBERFUL_VERSION', '1.48.0');
+namespace RedRockSubscriptions;
 
-if (!defined('MEMBERFUL_PLUGIN_FILE'))
-    define('MEMBERFUL_PLUGIN_FILE', __FILE__);
-
-if (!defined('MEMBERFUL_DIR'))
-    define('MEMBERFUL_DIR', dirname(__FILE__));
-
-if (!defined('MEMBERFUL_URL'))
-    define('MEMBERFUL_URL', plugins_url('', __FILE__));
-
-if (!defined('MEMBERFUL_APPS_HOST'))
-    define('MEMBERFUL_APPS_HOST', 'https://apps.memberful.com');
-
-if (!defined('MEMBERFUL_EMBED_HOST'))
-    define('MEMBERFUL_EMBED_HOST', 'https://d35xxde4fgg0cx.cloudfront.net');
-
-if (!defined('MEMBERFUL_SSL_VERIFY'))
-    define('MEMBERFUL_SSL_VERIFY', TRUE);
-
-foreach (glob(MEMBERFUL_DIR . "/src/*.php") as $filename) {
-    require_once $filename;
-}
-
-require_once MEMBERFUL_DIR . '/vendor/reporting.php';
-
-foreach (glob(MEMBERFUL_DIR . "/classes/*.php") as $filename) {
-    require_once $filename;
-}
-
-function memberful_wp_plugin_activate() {
-    add_option('memberful_wp_activation_redirect' , true);
-}
-register_activation_hook(__FILE__, 'memberful_wp_plugin_activate');
-
-function memberful_wp_plugin_deactivate() {
-    memberful_clear_cron_jobs();
-}
-register_deactivation_hook(__FILE__, 'memberful_wp_plugin_deactivate');
-
-function memberful_extend_auth_cookie_expiration($expireIn) {
-    if (get_option('memberful_extend_auth_cookie_expiration')) {
-        return WEEK_IN_SECONDS * 8;
+class Plugin {
+    private static $defaultInstance;
+    private $pluginDefinitions;
+    private $pluginSetterUpper;
+    
+    public static function _createDefaultInstance($pluginFile) {
+        $defaultInstance = new Plugin();
+        $defaultInstance->initAsDefault($pluginFile);
     }
-    else {
-        return $expireIn;
+    
+    public static function defaultInstance() {
+        return $defaultInstance;
+    }
+    
+    private initAsDefault($pluginFile) {
+        $pluginDefinitions = new PluginDefinitions($pluginFile);
+        
+        foreach (glob(getPluginDir() . "/classes/*.php") as $filename) {
+            require_once $filename;
+        }
+        
+        $pluginSetterUpper = new PluginSetterUpper();
+    }
+    
+    
+    public function init() {
+        $pluginSetterUpper->doSetup();
+    }
+    
+    public function shouldSSLVerify() {
+        return $pluginDefinitions->shouldSSLVerify();
+    }
+    
+    public function getEmbedHost() {
+        return $pluginDefinitions->getEmbedHost;
+    }
+    
+    public function getAppsHost() {
+        return $pluginDefinitions->getAppsHost();
+    }
+    
+    public function getPluginURL() {
+        return $pluginDefinitions->getPluginURL();
+    }
+    
+    public function getPluginDir() {
+        return $pluginDefinitions->getPluginDir();
+    }
+    
+    public function getPluginFile() {
+        return $pluginDefinitions->getPluginFile();
+    }
+    
+    public function getPluginVersion() {
+        return $pluginDefinitions->getPluginVersion();
     }
 }
-add_filter('auth_cookie_expiration', 'memberful_extend_auth_cookie_expiration');
+
+class PluginDefinitions {
+    public function __construct($pluginFile) {
+        $this->pluginFile = $pluginFile;
+        $pluginURL = plugins_url('', $pluginFile);
+        $pluginDir = dirname($pluginFile);
+    }
+    
+    private $pluginURL;
+    private $pluginDir;
+    private $pluginFile;
+    private $shouldSSLVerify = true;
+    private $embedHost = "https://d35xxde4fgg0cx.cloudfront.net";
+    private $appsHost = "https://apps.memberful.com";
+    private $pluginVersion = "1.48.0";
+    
+    public function shouldSSLVerify() {
+        return $shouldSSLVerify;
+    }
+    
+    public function getEmbedHost() {
+        return $embedHost;
+    }
+    
+    public function getAppsHost() {
+        return $appsHost;
+    }
+    
+    public function getPluginURL() {
+        return $pluginURL;
+    }
+    
+    public function getPluginDir() {
+        return $pluginDir;
+    }
+    
+    public function getPluginFile() {
+        return $pluginFile;
+    }
+    
+    public function getPluginVersion() {
+        return $pluginVersion;
+    }
+}
+
+Plugin::_createDefaultInstance(__FILE__);
+Plugin::defaultInstance()->init();

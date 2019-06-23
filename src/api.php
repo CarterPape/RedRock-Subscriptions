@@ -2,7 +2,7 @@
 
 global $wp_version;
 
-define('MEMBERFUL_API_USER_AGENT', 'WordPress/'.$wp_version.' (PHP '.phpversion().') memberful-wp/'.MEMBERFUL_VERSION);
+define('MEMBERFUL_API_USER_AGENT', 'WordPress/'.$wp_version.' (PHP '.phpversion().') memberful-wp/'.Plugin::defaultInstance()->getPluginVersion());
 
 /**
  * Get details about a specific member via the API
@@ -34,7 +34,7 @@ function memberful_wp_get_data_from_api($url) {
     $url = memberful_wp_wrap_api_token($url);
 
     $request = array(
-        'sslverify' => MEMBERFUL_SSL_VERIFY,
+        'sslverify' => Plugin::defaultInstance()->shouldSSLVerify(),
         'headers'   => array(
             'User-Agent' => MEMBERFUL_API_USER_AGENT,
             'Accept' => 'application/json'
@@ -60,7 +60,7 @@ function memberful_wp_post_data_to_api_as_json($url, $data) {
         ),
         'body' => json_encode($data),
         'timeout' => 15,
-        'sslverify' => MEMBERFUL_SSL_VERIFY,
+        'sslverify' => Plugin::defaultInstance()->shouldSSLVerify(),
     );
 
     $response = wp_remote_post($url, $request);
@@ -81,7 +81,7 @@ function memberful_wp_put_data_to_api_as_json($url, $data) {
         ),
         'body' => json_encode($data),
         'timeout' => 15,
-        'sslverify' => MEMBERFUL_SSL_VERIFY,
+        'sslverify' => Plugin::defaultInstance()->shouldSSLVerify(),
     );
 
     $response = wp_remote_post($url, $request);

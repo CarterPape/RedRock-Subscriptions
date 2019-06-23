@@ -1,9 +1,11 @@
 <?php
 
-abstract class RRS_View {
-    protected $templatePartsDir = MEMBERFUL_DIR;
+namespace RedRockSubscriptions;
+
+abstract class View {
+    protected $templatePartsDir = Plugin::defaultInstance()->getPluginDir();
     
-    public function show() {
+    public function echo() {
         include $templatePartsDir . "/" . get_class($this) . ".template.php";
     }
     

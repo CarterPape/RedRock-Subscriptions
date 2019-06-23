@@ -5,7 +5,7 @@
         <div id="memberful-registered" class="postbox">
             <h1><?php _e('Integration Active', 'memberful'); ?></h1>
             <h2><?php printf(__('Syncing %d subscription plans and %d downloads.', 'memberful'), count($subscriptions), count($downloads)); ?></h2>
-            <p><?php printf(__('<a href="%s">Sign in to your Memberful account</a> to manage downloads, subscriptions, members, and orders.'), memberful_url('admin')) ?></p>
+            <p><?php printf(__('<a href="%s">Sign in to your Memberful account</a> to manage downloads, subscriptions, members, and orders.'), Plugin::defaultInstance()->getPluginURL()('admin')) ?></p>
             <form method="POST" action="<?php echo memberful_wp_plugin_settings_url(TRUE) ?>">
                 <?php memberful_wp_nonce_field('memberful_options'); ?>
                 <button type="submit" name="manual_sync" class="button action"><?php _e('Run manual sync', 'memberful'); ?></button>

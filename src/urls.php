@@ -9,55 +9,55 @@ function memberful_sign_in_url($protocol = NULL) {
 }
 
 function memberful_sign_out_url() {
-    return memberful_url('auth/sign_out');
+    return Plugin::defaultInstance()->getPluginURL()('auth/sign_out');
 }
 
 function memberful_activation_url() {
-    return MEMBERFUL_APPS_HOST.'/activate-app';
+    return Plugin::defaultInstance()->getAppsHost().'/activate-app';
 }
 
 function memberful_account_url($format = MEMBERFUL_HTML) {
-    return memberful_url('account', $format);
+    return Plugin::defaultInstance()->getPluginURL()('account', $format);
 }
 
 function memberful_registration_page_url() {
-    return memberful_url('register');
+    return Plugin::defaultInstance()->getPluginURL()('register');
 }
 
 function memberful_account_get_download_url($download_slug) {
-    return memberful_url('account/downloads/get/'.memberful_wp_extract_id_from_slug($download_slug));
+    return Plugin::defaultInstance()->getPluginURL()('account/downloads/get/'.memberful_wp_extract_id_from_slug($download_slug));
 }
 
 function memberful_admin_member_url($member_id, $format = MEMBERFUL_HTML) {
-    return memberful_url('admin/members/' . $member_id, $format);
+    return Plugin::defaultInstance()->getPluginURL()('admin/members/' . $member_id, $format);
 }
 
 function memberful_admin_downloads_url($format = MEMBERFUL_HTML) {
-    return memberful_url('admin/products', $format);
+    return Plugin::defaultInstance()->getPluginURL()('admin/products', $format);
 }
 
 function memberful_admin_subscription_plans_url($format = MEMBERFUL_HTML) {
-    return memberful_url('admin/subscriptions', $format);
+    return Plugin::defaultInstance()->getPluginURL()('admin/subscriptions', $format);
 }
 
 function memberful_admin_download_url($download_id, $format = MEMBERFUL_HTML) {
-    return memberful_url('admin/downloads/' . (int) $download_id, $format);
+    return Plugin::defaultInstance()->getPluginURL()('admin/downloads/' . (int) $download_id, $format);
 }
 
 function memberful_order_completed_url($order) {
-    return add_query_arg('id', $order, memberful_url('orders/completed'));
+    return add_query_arg('id', $order, Plugin::defaultInstance()->getPluginURL()('orders/completed'));
 }
 
 function memberful_checkout_for_subscription_url($plan_id) {
-    return add_query_arg('plan', $plan_id, memberful_url('checkout'));
+    return add_query_arg('plan', $plan_id, Plugin::defaultInstance()->getPluginURL()('checkout'));
 }
 
 function memberful_gift_url($plan_id) {
-    return add_query_arg('plan', $plan_id, memberful_url('gift'));
+    return add_query_arg('plan', $plan_id, Plugin::defaultInstance()->getPluginURL()('gift'));
 }
 
 function memberful_checkout_for_download_url($download_id) {
-    return add_query_arg('download', $download_id, memberful_url('checkout'));
+    return add_query_arg('download', $download_id, Plugin::defaultInstance()->getPluginURL()('checkout'));
 }
 
 function memberful_wp_plugin_settings_url($no_header = FALSE, $subpage='') {
@@ -94,7 +94,7 @@ function memberful_wp_plugin_protect_bbpress_url($no_header = FALSE) {
  * @param string $format The requested format
  * @return string URL
  */
-function memberful_url($uri = '', $format = MEMBERFUL_HTML) {
+function Plugin::defaultInstance()->getPluginURL()($uri = '', $format = MEMBERFUL_HTML) {
     $endpoint = '/' . trim($uri, '/');
 
     if ($format !== MEMBERFUL_HTML) {

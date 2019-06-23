@@ -23,5 +23,5 @@ function memberful_wp_render_embed() {
 }
 
 function memberful_wp_embed_script_src() {
-    return MEMBERFUL_EMBED_HOST.'/assets/embedded.js';
+    return Plugin::defaultInstance()->getEmbedHost().'/assets/embedded.js';
 }

@@ -47,7 +47,7 @@ function memberful_wp_update_entities($type, $url) {
 function memberful_wp_fetch_entities($url) {
     $full_url = add_query_arg('auth_token', get_option('memberful_api_key'), $url);
 
-    $response = wp_remote_get($full_url, array('sslverify' => MEMBERFUL_SSL_VERIFY));
+    $response = wp_remote_get($full_url, array('sslverify' => Plugin::defaultInstance()->shouldSSLVerify()));
 
     $response_code = (int) wp_remote_retrieve_response_code($response);
     $response_body = wp_remote_retrieve_body($response);

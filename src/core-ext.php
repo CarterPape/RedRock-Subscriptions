@@ -25,10 +25,10 @@ function memberful_wp_allowed_hosts($content) {
     $site = get_option('memberful_site');
 
     if (!empty($site)) {
-        $memberful_url = parse_url($site);
+        $Plugin::defaultInstance()->getPluginURL() = parse_url($site);
 
-        if ($memberful_url !== false)
-            $content[] = $memberful_url['host'];
+        if ($Plugin::defaultInstance()->getPluginURL() !== false)
+            $content[] = $Plugin::defaultInstance()->getPluginURL()['host'];
     }
 
     return $content;
@@ -37,5 +37,5 @@ function memberful_wp_allowed_hosts($content) {
 function memberful_wp_render($template, array $vars = array()) {
     extract($vars);
 
-    include MEMBERFUL_DIR.'/views/'.$template.'.php';
+    include Plugin::defaultInstance()->getPluginDir().'/views/'.$template.'.php';
 }
