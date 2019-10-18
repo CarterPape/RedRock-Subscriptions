@@ -1,6 +1,6 @@
 <?php
 
-namespace RedRockSubscriptions;
+namespace RedRock\Subscriptions;
 
 class SubscriptionPlanListView extends View {
 }

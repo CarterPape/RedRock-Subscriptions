@@ -2,5 +2,5 @@
 
 namespace RedRock\Subscriptions;
 
-class PaywallView extends View {
+abstract class DBConnection {
 }

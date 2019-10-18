@@ -22,35 +22,4 @@ $rip-shadow:
     min-height: 75vh;
     padding-top: 2em;
     background-color: #DDD;
-    background-image:
-        linear-gradient(
-            135deg,
-            $white-step
-        ),
-        linear-gradient(
-            -135deg,
-            $white-step
-        ),
-        linear-gradient(
-            to bottom,
-            $rip-shadow
-        );
-    background-position:
-        top center,
-        top center,
-        top center;
-    background-size:
-        .5em .5em,
-        .5em .5em,
-        100% 2em;
-    background-repeat: repeat-x;
-    
-    #footer-background {
-        z-index: -2;
-        position: fixed;
-        height: 50vh;
-        background-color: #ddd;
-        bottom: 0;
-        width: 100vw;
-    }
 }

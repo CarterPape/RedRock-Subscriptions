@@ -1,6 +1,6 @@
 <?php
 
-namespace RedRockSubscriptions;
+namespace RedRock\Subscriptions;
 
 class PostPreview extends View {
     private $postPreviewContent;
@@ -9,7 +9,7 @@ class PostPreview extends View {
         
     }
     
-    public function echo() {
+    public function renderIt() {
         
     }
 }

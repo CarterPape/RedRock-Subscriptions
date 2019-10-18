@@ -1,17 +1,22 @@
 <?php
 
-namespace RedRockSubscriptions;
+namespace RedRock\Subscriptions;
 
 abstract class View {
-    protected $templatePartsDir = Plugin::defaultInstance()->getPluginDir();
+    protected $templateFileLocator = new TemplateFileLocator($this);
+    protected $templateFilePath;
     
-    public function echo() {
-        include $templatePartsDir . "/" . get_class($this) . ".template.php";
+    public function renderIt() {
+        if (!isset($templateFilePath)) {
+            $templateFilePath = templateFileLocator->getTemplateFilePath();
+        }
+        
+        include $templateFilePath;
     }
     
-    public function returnView() {
+    public function returnIt() {
         ob_start();
-        show();
+        renderIt();
         return ob_get_clean();
     }
 }
