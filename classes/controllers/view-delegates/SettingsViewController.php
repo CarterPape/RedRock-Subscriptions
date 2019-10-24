@@ -17,8 +17,9 @@ class SettingsViewController {
     private $currentSubpage;
     
     public function __construct() {
-        $subpagesBySlug = $settingsSubpagesLoader->getSlugToSubpageDict()
-        $defaultSubpage = $subpagesBySlug[ExistingMemberfulConnectionSubpage::getSlug()];
+        $subpagesBySlug = $settingsSubpagesLoader->getSlugToSubpageDict();
+        $defaultSubpage
+            = $subpagesBySlug[ExistingMemberfulConnectionSubpage::getSlug()];
         setUpView();
     }
     

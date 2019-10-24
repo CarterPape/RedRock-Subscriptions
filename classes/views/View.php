@@ -3,12 +3,16 @@
 namespace RedRock\Subscriptions;
 
 abstract class View {
-    protected $templateFileLocator = new TemplateFileLocator($this);
+    protected $templateFileLocator;
     protected $templateFilePath;
+    
+    public function __construct() {
+        $templateFileLocator = new TemplateFileLocator($this);
+    }
     
     public function renderIt() {
         if (!isset($templateFilePath)) {
-            $templateFilePath = templateFileLocator->getTemplateFilePath();
+            $templateFilePath = templateFileLocator.getTemplateFilePath();
         }
         
         include $templateFilePath;

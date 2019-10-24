@@ -8,12 +8,12 @@ class Logger {
     private $currentMethod;
     private $currentLineNumber;
     
-    public __construct($callingObject, $callingFile) {
+    public function __construct($callingObject, $callingFile) {
         $this->callingObject = $callingObject;
         $this->callingFile = $callingFile;
     }
     
-    public simpleLog($message, $includePayload = false) {
+    public function simpleLog($message, $includePayload = false) {
         $logOutput = "from {$callingFile}: {$message}";
         $logOutput .=
             $includePayload
@@ -23,7 +23,7 @@ class Logger {
         error_log("from {$callingFile}: ${message}");
     }
     
-    public verboseLog($currentMethod, $currentLineNumber, $message, $includePayload = false) {
+    public function verboseLog($currentMethod, $currentLineNumber, $message, $includePayload = false) {
         $this->currentLineNumber = $currentLineNumber;
         $this->currentMethod = $currentMethod;
         
@@ -36,11 +36,11 @@ class Logger {
         error_log($logOutput);
     }
     
-    private verboseSourceInfo() {
+    private function verboseSourceInfo() {
         return "from {$callingFile} in {$currentMethod}, line #{$currentLineNumber}:";
     }
     
-    private payload() {
+    private function payload() {
         return "via calling object:\n" . var_dump($callingObject);
     }
 }

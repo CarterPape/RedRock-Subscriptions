@@ -10,3 +10,6 @@ class PluginDebugSubpage extends SettingsSubpage {
     public static function getNiceName() {
         return "Debug plugin";
     }
+    
+    %%%;
+}

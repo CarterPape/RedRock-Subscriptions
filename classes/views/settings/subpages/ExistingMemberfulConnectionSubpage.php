@@ -2,6 +2,8 @@
 
 namespace RedRock\Subscriptions;
 
+check for finish %%%;
+
 class ExistingMemberfulConnectionSubpage extends SettingsSubview {
     public static function getPublicName() {
         return "existing_connection";

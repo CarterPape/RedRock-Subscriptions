@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: RedRock Subscriptions
-Description: Sell subscriptions and restrict access to content with WordPress and Memberful.
+Description: Sell and manage subscriptions and restrict access to content with WordPress and Memberful.
 Author: The Times-Independent
 Author URI: http://moabtimes.com/
 */

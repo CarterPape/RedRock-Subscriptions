@@ -3,7 +3,7 @@
 namespace RedRock\Subscriptions;
 
 require_once "PluginDefinitions.php";
-require_once "AutoIncluder.php";
+require_once "AutoLoader.php";
 
 class Plugin {
     private static $defaultInstance;
@@ -46,13 +46,5 @@ class Plugin {
     
     public function run() {
         $rootServiceSpawner->spawnServices();
-    }
-    
-    public function getDefinitions() {
-        return $pluginDefinitions;
-    }
-    
-    public function getServiceByClass($class) {
-        return $serviceSuite->getServiceByClass($class);
     }
 }

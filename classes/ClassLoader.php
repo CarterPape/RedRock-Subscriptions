@@ -6,6 +6,11 @@ class ClassLoader {
     private $subdirectoryPathRelativeToPluginDirectory;
     private $loadedClasses = array();
     
+    private $namespace;
+    private $classShortName;
+    private $gettingNamespace;
+    private $gettingClass;
+    
     public function __construct($subdirectoryPathRelativeToPluginDirectory) {
         $this->subdirectoryPathRelativeToPluginDirectory = $subdirectoryPathRelativeToPluginDirectory;
     }
@@ -17,7 +22,7 @@ class ClassLoader {
     
     private function includeAllFilesInDirectory() {
         $absoluteDirectoryPath =
-            Plugin::getDefinitions->getPluginDirectoryPath()
+            Plugin::getDefinitions()->getPluginDirectoryPath()
             . $subdirectoryPathRelativeToPluginDirectory;
         
         recursivelyIncludeFiles($absoluteDirectoryPath);
@@ -41,11 +46,6 @@ class ClassLoader {
             }
         }
     }
-    
-    private $namespace;
-    private $classShortName;
-    private $gettingNamespace;
-    private $gettingClass;
     
     private function getQualifiedClassNameDefinedAtPath($absoluteFilePath) {
         $fileContents = file_get_contents($absoluteFilePath);

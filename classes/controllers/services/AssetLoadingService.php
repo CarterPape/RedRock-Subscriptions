@@ -9,17 +9,24 @@ class AssetLoadingService extends Service {
         add_action("admin_enqueue_scripts", array($this, "enqueueAdminAssets"));
     }
     
+    public function urlToRRSAsset($relativePath) {
+        return plugins_url(
+            $relativePath,
+            Plugin::getDefinitions()->getPluginDir()
+        );
+    }
+    
     function enqueueStyle() {
         wp_enqueue_style(
-            'memberful-admin',
-            plugins_url('stylesheets/all.css')
+            'RRS general stylesheet',
+            urlToRRSAsset('stylesheets/all.css')
         );
     }
     
     function enqueueZipCodeJS() {
         wp_enqueue_script(
             'RRS zip code input',
-            plugins_url('js/zip code input.js'),
+            urlToRRSAsset('js/zip code input.js'),
             array('jquery')
         );
     }
@@ -29,20 +36,20 @@ class AssetLoadingService extends Service {
 
         if (strpos('memberful', $screen->id) !== null) {
             wp_enqueue_style(
-                'memberful-admin',
-                plugins_url('stylesheets/admin.css' , Plugin::getDefinitions()->getPluginDir())
+                'RRS admin stylesheet',
+                urlToRRSAsset('stylesheets/admin.css')
             );
             wp_enqueue_script(
-                'memberful-admin',
-                plugins_url('js/admin.js', Plugin::getDefinitions()->getPluginDir()),
+                'RRS admin script',
+                urlToRRSAsset('js/admin.js'),
                 array('jquery'),
                 Plugin::getDefinitions()->getPluginVersion()
             );
         }
 
         wp_enqueue_script(
-            'memberful-menu',
-            plugins_url('js/menu.js', Plugin::getDefinitions()->getPluginDir()),
+            'RRS navigation menu script',
+            urlToRRSAsset('js/menu.js'),
             array('jquery'),
             Plugin::getDefinitions()->getPluginVersion()
         );

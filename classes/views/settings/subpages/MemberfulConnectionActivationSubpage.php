@@ -10,4 +10,6 @@ class MemberfulConnectionActivationSubpage extends SettingsSubpage {
     public static function getNiceName() {
         return "Connect to Memberful";
     }
+    
+    %%%;
 }

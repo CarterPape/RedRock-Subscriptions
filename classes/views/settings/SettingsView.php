@@ -7,7 +7,7 @@ class SettingsView extends View {
     private $tabViewToRender;
     private $flashMessageToRender;
     
-    public __construct(
+    public function __construct(
         $subpageToRender,
         $tabViewToRender        = NULL,
         $flashMessageToRender   = NULL

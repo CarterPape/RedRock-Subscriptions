@@ -10,3 +10,6 @@ class CookiesTestSubpage extends SettingsSubview {
     public static function getNiceName() {
         return "Test cookies";
     }
+    
+    %%%;
+}

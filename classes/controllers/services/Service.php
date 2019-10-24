@@ -3,7 +3,7 @@
 namespace RedRock\Subscriptions;
 
 abstract class Service {
-    public function emplaceCallbacks();
+    abstract public function emplaceCallbacks();
 }
 
 /*

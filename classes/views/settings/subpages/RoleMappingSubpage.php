@@ -2,6 +2,8 @@
 
 namespace RedRock\Subscriptions;
 
+check if finished %%%;
+
 class RoleMappingSubpage extends SettingsSubpage {
     public static function getSlug() {
         return "role_mapping";
@@ -14,3 +16,4 @@ class RoleMappingSubpage extends SettingsSubpage {
     public function renderNonceField() {
         memberful_wp_nonce_field('memberful_options');
     }
+}

@@ -12,7 +12,7 @@ class UserDBConnection extends DBConnection {
     private function getAllMeta() {
         $userMeta = array_map(
             array($this, "makeOneMetaValueSingle"),
-            get_user_meta($user->getWPUserID());
+            get_user_meta($user->getWPUserID())
         );
     }
 }

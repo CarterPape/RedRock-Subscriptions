@@ -1,13 +1,21 @@
 <?php
 
+namespace RedRock\Subscriptions;
+
 class MemberSynchronizer implements Synchronizer {
-    private $logger = new Logger($this);
-    private $userMappingRepository = new UserMappingRepository;
+    private $logger;
+    private $userMappingRepository;
     private $membersToSync;
+    
+    public function __construct() {
+        $logger = new Logger($this);
+        $userMappingRepository = new UserMappingRepository;
+    }
     
     public function sync() {
         logStart(__METHOD__, __LINE__);
-        $membersToSync = $userMappingRepository->fetchIDsOfMembersThatNeedSyncing();
+        $membersToSync =
+            $userMappingRepository->fetchIDsOfMembersThatNeedSyncing();
         logCount();
         foreach ($membersToSync as $memberfulMember) {
             $wpUserID = memberful_wp_sync_member_from_memberful($memberfulMember);
@@ -20,7 +28,7 @@ class MemberSynchronizer implements Synchronizer {
         logger.verboseLog(
             $callingMethod,
             $callingLine,
-            "Beginning member sync from a cron job."
+            "Beginning member sync."
         );
     }
     
@@ -36,7 +44,7 @@ class MemberSynchronizer implements Synchronizer {
         logger.verboseLog(
             $callingMethod,
             $callingLine,
-            "Finished syncing " . count($membersToSync) . " members from a cron job."
+            "Finished syncing " . count($membersToSync) . " members."
         );
     }
 }

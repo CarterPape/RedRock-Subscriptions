@@ -1,11 +1,10 @@
 <?php
 
-die("incomplete implementation");
-
 namespace RedRock\Subscriptions;
 
 abstract class SettingsSubpage extends View {
-    private $settingsService = Plugin::getServiceByClass(SettingsService::class);
+    private $settingsService
+        = Plugin::getServiceByClass(SettingsService::class);
     
     public static function getSlug();
     public static function getNiceName();
@@ -13,4 +12,6 @@ abstract class SettingsSubpage extends View {
     public function renderNonceField() {
         echo $settingsService->getNonceField();
     }
+    
+    %%%;
 }

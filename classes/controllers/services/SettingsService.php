@@ -3,16 +3,30 @@
 namespace RedRock\Subscriptions;
 
 class SettingsService extends DependentService {
-    private $pluginName                     = Plugin::getDefinitions()->getPluginName();
-    private $settingsPageDisplayName        = $pluginName;
-    private $settingsPageSlug               = "RedRock-Subscriptions-settings";
-    private $settingsPageURL                = admin_url('options-general.php?page={$settingsPageSlug}');
+    private $pluginName;
+    private $settingsPageDisplayName;
+    private $settingsPageSlug;
+    private $settingsPageURL;
     
     private $synchronizationService;
-    private $settingsViewController         = new SettingsViewController;
+    private $settingsViewController;
     
-    private $settingsDBConnection           = new SettingsDBConnection;
-    private $settingsActionResponderSuite   = new SettingsActionResponderSuite;
+    private $settingsDBConnection;
+    private $settingsActionResponderSuite;
+    
+    public function __construct() {
+        $pluginName                 = Plugin::getDefinitions()->getPluginName();
+        $settingsPageDisplayName    = $pluginName;
+        $settingsPageSlug           = "RedRock-Subscriptions-settings";
+        $settingsPageURL            = admin_url(
+            'options-general.php?page={$settingsPageSlug}'
+        );
+        
+        $settingsViewController = new SettingsViewController;
+        
+        $settingsDBConnection           = new SettingsDBConnection;
+        $settingsActionResponderSuite   = new SettingsActionResponderSuite;
+    }
     
     public function emplaceCallbacks() {
         register_activation_hook(
@@ -28,12 +42,16 @@ class SettingsService extends DependentService {
             array($settingsViewController, "renderView")
         );
         
-        $settingsActionResponderList = $settingsActionResponderSuite->getResponderList();
+        $settingsActionResponderList =
+            $settingsActionResponderSuite->getResponderList();
         
         foreach ($settingsActionResponderList as $eachSettingsActionResponder) {
             add_action(
                 $eachSettingsActionResponder->getActionTag(),
-                array($eachSettingsActionResponder, "respondToAction")
+                array(
+                    $eachSettingsActionResponder,
+                    "respondToAction"
+                )
             );
         }
     }
@@ -43,7 +61,8 @@ class SettingsService extends DependentService {
     }
     
     public function takeDependencies($allServicesByClass) {
-        $synchronizationService = $allServicesByClass[SynchronizationService::class];
+        $synchronizationService
+            = $allServicesByClass[SynchronizationService::class];
     }
     
     public function resetSettings() {

@@ -3,12 +3,6 @@
 namespace RedRock\Subscriptions;
 
 class PluginDefinitions {
-    public function __construct($pluginFile) {
-        $this->pluginFile = $pluginFile;
-        $pluginURL = plugins_url('', $pluginFile);
-        $pluginDirectoryPath = dirname($pluginFile);
-    }
-    
     private $pluginURL;
     private $pluginDirectoryPath;
     private $pluginFile;
@@ -17,6 +11,12 @@ class PluginDefinitions {
     private $appsHost = "https://apps.memberful.com";
     private $pluginVersion = "1.48.0";
     private $pluginName = "RedRock Subscriptions";
+    
+    public function __construct($pluginFile) {
+        $this->pluginFile = $pluginFile;
+        $pluginURL = plugins_url('', $pluginFile);
+        $pluginDirectoryPath = dirname($pluginFile);
+    }
     
     public function shouldSSLVerify() {
         return $shouldSSLVerify;
