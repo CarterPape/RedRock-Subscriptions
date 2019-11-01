@@ -12,7 +12,7 @@ abstract class View {
     
     public function renderIt() {
         if (!isset($templateFilePath)) {
-            $templateFilePath = templateFileLocator.getTemplateFilePath();
+            $templateFilePath = $templateFileLocator.getTemplateFilePath();
         }
         
         include $templateFilePath;

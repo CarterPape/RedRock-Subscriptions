@@ -3,13 +3,14 @@
 namespace RedRock\Subscriptions;
 
 class User extends \WP_User {
-    private $MemberfulUserID;
+    private $memberfulUserID    = null;
+    private $guestID            = null;
     
     public function getWPUserID() {
         return $ID;
     }
     
     public function getMemberfulUserID() {
-        return $MemberfulUserID;
+        return $memberfulUserID;
     }
 }

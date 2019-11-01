@@ -19,8 +19,8 @@ abstract class SettingsActionResponder extends ActionResponder {
     }
     
     protected function verifyRequest() {
-        user_can("change settings");
-        wp_verify_nonce();
+        user_can("change settings");??;
+        wp_verify_nonce();??;
     }
     
     protected function redirectToPluginSettingsPage() {
