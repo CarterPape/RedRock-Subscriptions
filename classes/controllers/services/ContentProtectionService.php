@@ -12,23 +12,18 @@ namespace RedRock\Subscriptions;
     
     HOW IT WORKS - subject to change
     
-    A ContentProtectionService instance is invoked whenever the "the_content" filter is invoked, which, from my understanding, happens whenever a post is being accessed for display purposes. **I need to investigate this further.**
-    
-    When invoked, the service determines whether it needs to filter the content
-    
-    just fucking treat bots as bots, man...
-        ø change the scout behavior to just look at user agents
-    
+    A ContentProtectionService instance is invoked whenever the "the_content" filter is invoked. To ensure that the_content is only being filtered when aappropriate, the service checks that the query is the main query for the page being displayed or requested and that the current page is singular (i.e. for diplaying an individual post or page).
+        
     
     **DELEGATED BEHAVIORS**
     
-    This service exposes a [view manager]? that the theme (which is loaded after the plugin) can invoke, passing to it custom subclasses of the base view classes.
+    This service exposes a view factory that the theme can invoke to set custom view classes, overriding the base view classes defined in this plugin.
     
-    These base view classes are non-abstract and have boilerplate stuff on them. One such view: The blurb view (with free quota and account information in it). The other main one: The forbidding view (which truncates the story and adds the tear-off view at the bottom, which contains a paywall view, which in a sublcass could include the marketing blurb and subscription options but the boilerplate just says "you need a subscription, bud").
-        o make a controller class file
-        o make a member instance of the controller here
+    These base view classes are non-abstract and have boilerplate stuff on them. One such view: The blurb view (with free quota and account information in it). The other main one: The forbidding view (which truncates the story and adds the tear-off view at the bottom, which contains a paywall view, which in a sublcass could include the marketing blurb and subscription options, but the boilerplate just says "you need a subscription, bud").
+        ø make a view factory class file
+        ø define and initialize a member instance of the view factory here
         o make a QuotaBlurbView that has a template with a bunch of conditionals that loads sentences based on the combination of blurbs to provide. Conceptually, the view is just the stuff inside the blurb bubble.
-        o make a ForbiddingView that truncates, has the tear-off, and has a boilerplate PaywallView
+        o make a ForbiddingView that truncates the post, has the tear-off, and has a boilerplate PaywallView
         ø make the RedRock\PaywallView subclass
             o make sure it's properly subclassed
     
@@ -36,8 +31,6 @@ namespace RedRock\Subscriptions;
         o make this subclass in RedRock
         o quickly hook up this subclass in RedRock (conditionally if plugin is loaded)
         o 
-    
-    HERE, THE INSTANCE VARIABLES SHOULD BE PRIVATE AND TYPE HINTING SHOULD BE USED IN THE setView FUNCTIONS TO ENSURE THAT THE VIEWS ARE CORRECTLY SUBLCASSED.
     
     Maybe this is also the place to expose a way for the theme to set the free quota—no no no, the number of monthly free articles should be a setting of the plugin.
 */
@@ -47,10 +40,6 @@ class ContentProtectionService extends Service {
     private $accessContextResolver  = null;
     private $contentViewFactory     = null;
     private $filterPredicateList    = array();
-    
-    public function _construct() {
-        $contentViewFactory = new ProtectedContentViewFactory;
-    }
     
     public function appendFilterPredicate(callable $newPredicate) {
         array_push(
@@ -64,6 +53,10 @@ class ContentProtectionService extends Service {
             $filterPredicateList,
             $newPredicate
         );
+    }
+    
+    public function getContentViewFactory() {
+        return $contentViewFactory;
     }
     
     public function emplaceCallbacks() {
@@ -82,6 +75,23 @@ class ContentProtectionService extends Service {
     }
     
     private function maybeProtectContent($requestedContent) {
+        if (contentShouldBeProtected()) {
+            return protectContent($requestedContent);
+        }
+        else {
+            return $requestedContent;
+        }
+    }
+    
+    private function contentShouldBeProtected() {
+        // We only want to invoke all this protection shit when WordPress applies the the_content filter in preparation to show a post (or page, I guess) on the page dedicated to that post. Elsewhere, we expect the post to be partially filtered (i.e. on the front page, where the_content is sometimes requested for excerpting the article) or for the filter to be invoked for some other reason. See below for details.
+        // https://pippinsplugins.com/playing-nice-with-the-content-filter/comment-page-1/
+        
+        return is_singular() && is_main_query();
+    }
+    
+    private function protectContent($requestedContent) {
+        $contentViewFactory = new ProtectedContentViewFactory;
         $contentAccessContext = new ContentAccessContext($requestedContent);
         
         $accessContextResolver = new AccessContextResolver(

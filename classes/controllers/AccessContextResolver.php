@@ -4,11 +4,11 @@ namespace RedRock\Subscriptions;
 
 class AccessContextResolver {
     private $contentAccessContext       = null;
+    private $contentViewFactory         = null;
+    private $filterPredicateList        = null;
     
     private $quotaTrackingService       = null;
     private $cookieTestService          = null;
-    
-    private $filterPredicateList        = null;
     
     public function __construct(
         &$contentAccessContext,
@@ -245,8 +245,8 @@ class AccessContextResolver {
             $contentAccessContext->cookieTestJustAttempted()
                 === ContentAccessContext::kCookieTestReturnedNegative
         ) {
-            $contentViewFactory->enableMessageAboutUserBeingUnidentifiable();
             $contentViewFactory->setContentToBeAbridged();
+            $contentViewFactory->enableMessageAboutUserBeingUnidentifiable();
         }
         else {
             // This is the case where the user has cookies enabled, they already hit their quota for the month, and there was no filter predicate triggered, so the content is blocked for them and they are presented with the abridged content and paywall.
