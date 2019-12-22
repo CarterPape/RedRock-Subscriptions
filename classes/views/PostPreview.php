@@ -9,7 +9,7 @@ class PostPreview extends View {
         
     }
     
-    public function renderIt() {
+    public function renderInPlace() {
         
     }
 }

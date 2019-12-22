@@ -11,6 +11,7 @@ class Plugin {
     private $pluginDefinitions;
     private $autoLoader;
     private $rootServiceSpawner;
+    private $serviceSuite;
     
     public static function spawn($pluginFile) {
         if ($defaultInstance === null) {
@@ -28,7 +29,7 @@ class Plugin {
     }
     
     public static function getServiceByClass($class) {
-        return $defaultInstance->getServiceByClass($class);
+        return $defaultInstance->serviceSuite->getServiceByClass($class);
     }
     
     

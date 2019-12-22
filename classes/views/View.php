@@ -10,7 +10,7 @@ abstract class View {
         $templateFileLocator = new TemplateFileLocator($this);
     }
     
-    public function renderIt() {
+    public function renderInPlace() {
         if (!isset($templateFilePath)) {
             $templateFilePath = $templateFileLocator.getTemplateFilePath();
         }
@@ -18,9 +18,9 @@ abstract class View {
         include $templateFilePath;
     }
     
-    public function returnIt() {
+    public function renderAsString() {
         ob_start();
-        renderIt();
+        renderInPlace();
         return ob_get_clean();
     }
 }

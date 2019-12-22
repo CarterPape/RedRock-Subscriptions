@@ -8,12 +8,12 @@ class ApplePayVerificationService extends Service {
             'plugins_loaded',
             array(
                 $this,
-                'show_apple_pay_domain_verification_file'
+                'maybeServeApplePayDomainVerificationFile'
             )
         );
     }
 
-    function show_apple_pay_domain_verification_file() {
+    function maybeServeApplePayDomainVerificationFile() {
         if (
             $_SERVER["REQUEST_URI"]
             == "/.well-known/apple-developer-merchantid-domain-association"

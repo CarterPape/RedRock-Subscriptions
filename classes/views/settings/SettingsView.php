@@ -18,18 +18,18 @@ class SettingsView extends View {
     }
     
     private function renderSubpage() {
-        $subpageToRender->renderIt();
+        $subpageToRender->renderInPlace();
     }
     
     private function maybeRenderTabView() {
         if ($tabViewToRender !== NULL) {
-            $tabViewToRender->renderIt();
+            $tabViewToRender->renderInPlace();
         }
     }
     
     private function maybeRenderFlashMessage() {
         if ($flashMessageToRender !== NULL) {
-            $flashMessageToRender->renderIt();
+            $flashMessageToRender->renderInPlace();
         }
     }
 }

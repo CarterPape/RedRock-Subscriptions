@@ -71,7 +71,7 @@ class SettingsViewController {
             $settingsService->loadRegistrationPage();
         }
         
-        $currentSubpage->renderIt();
+        $currentSubpage->renderInPlace();
     }
     
     private function handleNormalSettingsPostback() {

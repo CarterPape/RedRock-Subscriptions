@@ -13,7 +13,7 @@ class ExistingMemberfulConnectionSubpage extends SettingsSubview {
         return "Existing connection to Memberful";
     }
     
-    public function renderIt() {
+    public function renderInPlace() {
         $downloads = get_option('memberful_downloads', array());
         $subscriptions = get_option('memberful_subscriptions', array());
         $extend_auth_cookie_expiration = get_option('memberful_extend_auth_cookie_expiration');

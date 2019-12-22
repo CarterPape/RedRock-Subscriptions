@@ -2,148 +2,188 @@
 
 namespace RedRock\Subscriptions;
 
-class ContentAccessContext extends Bean {
-    public $scout;
+// Get rid of the scout. Make the keys public. Collapse the binary functions into distinct functions per variable. Externally, switch the if statements to switch statements. Do lazy loading. Don't abstract lazy loading out of the functions.
+
+class ContentAccessContext {
+    private $requester;
+    private $requestedContent;
     
-    public function __construct() {
-        $scout = new ContentAccessContextScout;
-        $scout->setOwner($this);
+    public function __construct($requestedContent) {
+        $this->requestedContent = $requestedContent;
     }
     
-    public $currentUser;
+    private $contentFreedom             = null;
+    public const kContentIsProtected    = 0x00;
+    public const kContentIsFree         = 0x01;
     
-    public $contentFreedom      = null;
-    const contentIsProtected    = 0x00;
-    const contentIsFree         = 0x01;
-    
-    public function contentIsProtected() {
-        return $contentFreedom == self::contentIsProtected;
+    public function getRequester() {
+        return $requester;
     }
     
-    public function contentIsFree() {
-        return $contentFreedom == self::contentIsFree;
+    public function getRequestedContent() {
+        return $requestedContent;
     }
     
-    public $userRobotStatus         = null;
-    const userNotRecognizedAsRobot  = 0x10;
-    const robotUserIsTrusted        = 0x11;
-    const robotUserIsNotTrusted     = 0x12;
-    
-    public function userNotRecognizedAsRobot() {
-        return $userRobotStatus == self::userNotRecognizedAsRobot;
+    public function getContentFreedom() {
+        if ($contentFreedom === null) {
+            getContentFreedomCore();
+        }
+        
+        return $contentFreedom;
     }
     
-    public function robotUserIsTrusted() {
-        return $userRobotStatus == self::robotUserIsTrusted;
+    private function getContentFreedomCore() {
+        
     }
     
-    public function robotUserIsNotTrusted() {
-        return $userRobotStatus == self::robotUserIsNotTrusted;
+    private $clientCrawlerStatus                = null;
+    public const kUserNotRecognizedAsCrawler    = 0x10;
+    public const kUserIsCrawler                 = 0x11;
+    
+    public function getClientCrawlerStatus() {
+        if ($clientCrawlerStatus === null) {
+            getClientCrawlerStatusCore();
+        }
+        
+        return $clientCrawlerStatus;
     }
     
-    public $wordpressLoginStatus        = null;
-    const userNotLoggedInToWPAccount    = 0x20;
-    const userIsLoggedInToWPAccount     = 0x21;
-    
-    public function userNotLoggedInToWPAccount() {
-        return $wordpressLoginStatus == self::userNotLoggedInToWPAccount;
+    private function getClientCrawlerStatusCore() {
+        if (
+            isset($_SERVER['HTTP_USER_AGENT'])
+            && preg_match(
+                '/bot|crawl|slurp|spider|mediapartners/i',
+                $_SERVER['HTTP_USER_AGENT']
+            )
+        ) {
+            $contextObject->clientCrawlerStatus =
+                ContentAccessContext::kUserIsCrawler;
+        }
+        else {
+            $contextObject->clientCrawlerStatus =
+                ContentAccessContext::kUserNotRecognizedAsCrawler;
+        }
     }
     
-    public function userIsLoggedInToWPAccount() {
-        return $wordpressLoginStatus == self::userIsLoggedInToWPAccount;
+    private $wordpressLoginStatus               = null;
+    public const kUserNotLoggedInToWPAccount    = 0x20;
+    public const kUserIsLoggedInToWPAccount     = 0x21;
+    
+    public function getWPLoginStatus() {
+        if ($wordpressLoginStatus === null) {
+            getWPLoginStatusCore();
+        }
+        
+        return $wordpressLoginStatus;
     }
     
-    public $memberfulLinkageStatus              = null;
-    const wordpressUserAlreadyLinkedToMemberful = 0x30;
-    const noExistingMemberfulLinkForWPUser      = 0x31;
-    
-    public function wordpressUserAlreadyLinkedToMemberful() {
-        return $memberfulLinkageStatus == self::wordpressUserAlreadyLinkedToMemberful;
+    private function getWPLoginStatusCore() {
+        
     }
     
-    public function noExistingMemberfulLinkForWPUser() {
-        return $memberfulLinkageStatus == self::noExistingMemberfulLinkForWPUser;
+    private $subServLinkageStatus                     = null;
+    public const kRequesterAlreadyLinkedToSubServ       = 0x30;
+    public const kNoExistingSubServLinkForRequester   = 0x31;
+    
+    public function checkForExistingSubServLinkage() {
+        if ($subServLinkageStatus === null) {
+            checkForExistingSubServLinkageCore();
+        }
+        
+        return $subServLinkageStatus;
     }
     
-    public $wordpressUserElevation  = null;
-    const userIsMoreThanASubscriber = 0x40;
-    const userHasSubscriberRole     = 0x41;
+    private function checkForExistingSubServLinkageCore() {
+        
+    }
+    
+    private $wordpressUserElevation         = null;
+    public const kUserIsMoreThanASubscriber = 0x40;
+    public const kUserHasSubscriberRole     = 0x41;
     
     public function userIsMoreThanASubscriber() {
-        return $wordpressUserElevation == self::userIsMoreThanASubscriber;
+        if ($wordpressUserElevation === null) {
+            userIsMoreThanASubscriberCore();
+        }
+        
+        return $wordpressUserElevation;
     }
     
-    public function userHasSubscriberRole() {
-        return $wordpressUserElevation == self::userHasSubscriberRole;
+    private function userIsMoreThanASubscriberCore() {
+        
     }
     
-    public $memberfulMapAttemptStatus   = null;
-    const mapAttemptSuccessful          = 0x50;
-    const mapAttemptUnsuccessful        = 0x51;
+    private $subServSubscriptionStatus    = null;
+    public const kUserHasActiveSubscription = 0x60;
+    public const kUserSubscriptionExpired   = 0x61;
+    public const kUserSubscriptionSuspended = 0x62;
+    public const kUserHasNoSubscription     = 0x63;
     
-    public function mapAttemptSuccessful() {
-        return $memberfulMapAttemptStatus == self::mapAttemptSuccessful;
+    public function getSubscriptionStatus() {
+        if ($subServSubscriptionStatus === null) {
+            getSubscriptionStatusCore();
+        }
+        
+        return $subServSubscriptionStatus;
     }
     
-    public function mapAttemptUnsuccessful() {
-        return $memberfulMapAttemptStatus == self::mapAttemptUnsuccessful;
+    private function getSubscriptionStatusCore() {
+        
     }
     
-    public $memberfulSubscriptionStatus = null;
-    const userHasActiveSubscription     = 0x60;
-    const userSubscriptionExpired       = 0x61;
-    const userSubscriptionSuspended     = 0x62;
-    const userHasNoSubscription         = 0x63;
+    private $existingCookieStatus   = null;
+    public const kUserHasAnyCookie  = 0x70;
+    public const kUserHasNoCookies  = 0x71;
     
-    public function userHasActiveSubscription() {
-        return $memberfulSubscriptionStatus == self::userHasActiveSubscription;
+    public function getExistingCookieStatus() {
+        
     }
     
-    public function userSubscriptionExpired() {
-        return $memberfulSubscriptionStatus == self::userSubscriptionExpired;
+    public function getExistingCookieStatusCore() {
+        
     }
     
-    public function userSubscriptionSuspended() {
-        return $memberfulSubscriptionStatus == self::userSubscriptionSuspended;
-    }
-    
-    public function userHasNoSubscription() {
-        return $memberfulSubscriptionStatus == self::userHasNoSubscription;
-    }
-    
-    public $existingQuotaCookieStatus   = null;
-    const userHasExistingQuotaCookie    = 0x70;
-    const noExistingQuotaCookieWithUser = 0x71;
-    
-    public function userHasExistingQuotaCookie() {
-        return $existingQuotaCookieStatus == self::userHasExistingQuotaCookie;
-    }
-    
-    public function noExistingQuotaCookieWithUser() {
-        return $existingQuotaCookieStatus == self::noExistingQuotaCookieWithUser;
-    }
-    
-    public $userReadCountState      = null;
-    const userStillUnderFreeQuota   = 0x80;
-    const userHitFreeQuotaThisMonth = 0x81;
+    private $userReadCountState             = null;
+    public const kUserStillUnderFreeQuota   = 0x80;
+    public const kUserHitFreeQuotaThisMonth = 0x81;
     
     public function userStillUnderFreeQuota() {
-        return $userReadCountState == self::userStillUnderFreeQuota;
+        lazilyLoad
+        return $userReadCountState == self::kUserStillUnderFreeQuota;
     }
     
     public function userHitFreeQuotaThisMonth() {
-        return $userReadCountState == self::userHitFreeQuotaThisMonth;
+        lazilyLoad
+        return $userReadCountState == self::kUserHitFreeQuotaThisMonth;
     }
     
-    public $userCookieAllergyStatus = null;
-    const userAcceptsCookies        = 0x90;
-    const userDoesNotAcceptCookies  = 0x91;
+    private $userCookieAllergyStatus        = null;
+    public const kUserAcceptsCookies        = 0x90;
+    public const kUserDoesNotAcceptCookies  = 0x91;
     
     public function userAcceptsCookies() {
-        return $userCookieAllergyStatus == self::userAcceptsCookies;
+        lazilyLoad
+        return $userCookieAllergyStatus == self::kUserAcceptsCookies;
     }
     
     public function userDoesNotAcceptCookies() {
-        return $userCookieAllergyStatus == self::userDoesNotAcceptCookies;
+        lazilyLoad
+        return $userCookieAllergyStatus == self::kUserDoesNotAcceptCookies;
+    }
+    
+    private $cookieTestStatus                   = null;
+    private const kCookieTestReturnedNegative   = 0xA0;
+    private const kNoCookieTestExecuted         = 0xA1;
+    
+    public function getCookieTestStatus() {
+        if ($cookieTestStatus === null) {
+            getCookieTestStatus();
+        }
+        
+        return $cookieTestStatus;
+    }
+    
+    private function getCookieTestStatus() {
+        
     }
 }

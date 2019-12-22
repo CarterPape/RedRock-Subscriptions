@@ -4,16 +4,18 @@ namespace RedRock\Subscriptions;
 
 class ServiceSuite {
     private static $servicesDirectoryPathRelativeToPluginDirectory
-        = "classes/controllers/services/";
+        = "./classes/controllers/services/";
     
     private $services           = array();
     private $dependentServices  = array();
     private $serviceClassLoader;
     
     public function __construct() {
-        $serviceClassLoader = new ClassLoader(
-            $servicesDirectoryPathRelativeToPluginDirectory
-        );
+        $serviceClassLoader
+            = new ClassLoader(
+                $servicesDirectoryPathRelativeToPluginDirectory
+            );
+        
         $serviceClassList = $serviceClassLoader->loadClasses();
         
         foreach ($serviceClassList as $eachClass) {
