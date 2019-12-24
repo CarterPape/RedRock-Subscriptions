@@ -5,10 +5,10 @@ namespace RedRock\Subscriptions;
 class ApplePayVerificationService extends Service {
     public function emplaceCallbacks() {
         add_action(
-            'plugins_loaded',
+            "plugins_loaded",
             array(
                 $this,
-                'maybeServeApplePayDomainVerificationFile'
+                "maybeServeApplePayDomainVerificationFile"
             )
         );
     }

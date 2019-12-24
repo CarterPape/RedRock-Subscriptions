@@ -13,14 +13,14 @@ class UserAuthorizationService extends Service {
     
     public function emplaceCallbacks() {
         add_filter(
-            'auth_cookie_expiration',
+            "auth_cookie_expiration",
             array(
                 $authCookieExtender,
                 "extendAuthCookieExpiration"
             )
         );
         add_action(
-            'wp_logout',
+            "wp_logout",
             array(
                 $logoutHandler,
                 "handleLogout"

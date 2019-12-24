@@ -5,7 +5,7 @@ namespace RedRock\Subscriptions;
 class MemberfulRedirectAuthorizationService extends Service {
     public function emplaceCallbacks() {
         add_filter(
-            'allowed_redirect_hosts',
+            "allowed_redirect_hosts",
             array(
                 $this,
                 "addMemberfulToAllowedHosts"
@@ -14,13 +14,13 @@ class MemberfulRedirectAuthorizationService extends Service {
     }
     
     public function addMemberfulToAllowedHosts($allowedHosts) {
-        $site = get_option('memberful_site');
+        $site = get_option("memberful_site");
 
         if (!empty($site)) {
             $parsedMemberfulSite = wp_parse_url($site);
 
             if ($parsedMemberfulSite !== false) {
-                $allowedHosts[] = $$parsedMemberfulSite['host'];
+                $allowedHosts[] = $$parsedMemberfulSite["host"];
             }
         }
         

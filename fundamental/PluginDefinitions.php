@@ -9,8 +9,9 @@ class PluginDefinitions {
     private $shouldSSLVerify = true;
     private $embedHost = "https://d35xxde4fgg0cx.cloudfront.net";
     private $appsHost = "https://apps.memberful.com";
-    private $pluginVersion = "1.48.0";
+    private $pluginVersion = "0.1.0";
     private $pluginName = "RedRock Subscriptions";
+    private $pluginCookiePrefix = "RedRockSubscriptions";
     
     public function __construct($pluginFile) {
         $this->pluginFile = $pluginFile;
@@ -48,5 +49,9 @@ class PluginDefinitions {
     
     public function getPluginName() {
         return $pluginName;
+    }
+    
+    public function getPluginCookieName() {
+        return $pluginCookieName;
     }
 }

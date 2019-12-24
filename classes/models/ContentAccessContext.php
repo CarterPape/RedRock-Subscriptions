@@ -6,7 +6,7 @@ class ContentAccessContext {
     private $requester;
     private $requestedContent;
     
-    public function __construct($requestedContent) {
+    public function __construct(string $requestedContent) {
         $this->requestedContent = $requestedContent;
     }
     

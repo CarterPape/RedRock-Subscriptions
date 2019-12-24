@@ -19,7 +19,7 @@ class SettingsService extends DependentService {
         $settingsPageDisplayName    = $pluginName;
         $settingsPageSlug           = "RedRock-Subscriptions-settings";
         $settingsPageURL            = admin_url(
-            'options-general.php?page={$settingsPageSlug}'
+            "options-general.php?page={$settingsPageSlug}"
         );
         
         $settingsViewController = new SettingsViewController;
@@ -60,7 +60,7 @@ class SettingsService extends DependentService {
         return $settingsPageURL;
     }
     
-    public function takeDependencies($allServicesByClass) {
+    public function takeDependencies(array $allServicesByClass) {
         $synchronizationService
             = $allServicesByClass[SynchronizationService::class];
     }

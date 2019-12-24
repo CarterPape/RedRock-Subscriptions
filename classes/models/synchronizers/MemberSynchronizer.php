@@ -25,7 +25,7 @@ class MemberSynchronizer implements Synchronizer {
     }
     
     private function logStart($callingMethod, $callingLine) {
-        logger.verboseLog(
+        $logger->verboseLog(
             $callingMethod,
             $callingLine,
             "Beginning member sync."
@@ -33,15 +33,15 @@ class MemberSynchronizer implements Synchronizer {
     }
     
     private function logCount() {
-        logger.simpleLog("Found ". count($membersToSync) . " members to sync.");
+        $logger->simpleLog("Found ". count($membersToSync) . " members to sync.");
     }
     
     private function logMemberSynced($memberfulID, $wpUserID) {
-        logger.simpleLog("Connected Memberful member #". $memberfulMember->ID . " to WordPress user #" . $wpUser->ID . ".");
+        $logger->simpleLog("Connected Memberful member #". $memberfulMember->ID . " to WordPress user #" . $wpUser->ID . ".");
     }
     
     private function logEnd($callingMethod, $callingLine) {
-        logger.verboseLog(
+        $logger->verboseLog(
             $callingMethod,
             $callingLine,
             "Finished syncing " . count($membersToSync) . " members."

@@ -12,12 +12,15 @@ class CookieTestService extends Service {
     private $cookieToTest;
     private $expectedCookieValue;
     
-    private $defaultTestCookieName  = "test-cookie";
+    private $defaultTestCookieName;
     private $defaultTestCookieValue = "test-cookie-value";
     
     private $thisPluginsName;
     
     public function __construct() {
+        $defaultTestCookieName = 
+            Plugin::getDefinitions()->getPluginCookiePrefix()
+            . "TestCookie";
         $thisPluginsName = Plugin::getDefinitions()->getPluginName();
     }
     
@@ -37,8 +40,8 @@ class CookieTestService extends Service {
         $encodedReturnURI = urlencode($returnURI);
         
         $expireAtEndOfSession                   = 0;
-        $allowAlllPathsToAccessTheCookie        = "/";
-        $allowAlllSubdomainsToAccessTheCookie   = "$_SERVER[HTTP_HOST]";
+        $allowAllPathsToAccessTheCookie         = "/";
+        $allowAllSubdomainsToAccessTheCookie    = "$_SERVER[HTTP_HOST]";
         $transmitTheCookieSecurely              = true;
         $makeTheCookieAccessibleOnlyViaHTTP     = true;
         $letOnlyThisSiteAccessTheCookie         = ["samesite" => "Strict"];
@@ -50,8 +53,8 @@ class CookieTestService extends Service {
             $defaultTestCookieName,
             $defaultTestCookieValue,
             $expireAtEndOfSession,
-            $allowAlllPathsToAccessTheCookie,
-            $allowAlllSubdomainsToAccessTheCookie,
+            $allowAllPathsToAccessTheCookie,
+            $allowAllSubdomainsToAccessTheCookie,
             $transmitTheCookieSecurely,
             $makeTheCookieAccessibleOnlyViaHTTP,
             $letOnlyThisSiteAccessTheCookie

@@ -16,7 +16,8 @@ class SettingsDBConnection extends DBConnection {
             "RRS_error_log"                     => array(),
             "RRS_role_for_active_customers"     => "subscriber",
             "RRS_role_for_inactive_customers"   => "subscriber",
-            "RRS_default_marketing_content"     => NULL
+            "RRS_default_marketing_content"     => NULL,
+            "RRS_universal_free_reads_quota"    => 3
         );
     }
     

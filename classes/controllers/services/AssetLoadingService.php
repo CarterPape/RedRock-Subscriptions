@@ -18,39 +18,39 @@ class AssetLoadingService extends Service {
     
     function enqueueStyle() {
         wp_enqueue_style(
-            'RRS general stylesheet',
-            urlToRRSAsset('stylesheets/all.css')
+            "RRS general stylesheet",
+            urlToRRSAsset("stylesheets/all.css")
         );
     }
     
     function enqueueZipCodeJS() {
         wp_enqueue_script(
-            'RRS zip code input',
-            urlToRRSAsset('js/zip code input.js'),
-            array('jquery')
+            "RRS zip code input",
+            urlToRRSAsset("js/zip code input.js"),
+            array("jquery")
         );
     }
     
     function enqueueAdminAssets() {
          $screen = get_current_screen();
 
-        if (strpos('memberful', $screen->id) !== null) {
+        if (strpos("memberful", $screen->id) !== null) {
             wp_enqueue_style(
-                'RRS admin stylesheet',
-                urlToRRSAsset('stylesheets/admin.css')
+                "RRS admin stylesheet",
+                urlToRRSAsset("stylesheets/admin.css")
             );
             wp_enqueue_script(
-                'RRS admin script',
-                urlToRRSAsset('js/admin.js'),
-                array('jquery'),
+                "RRS admin script",
+                urlToRRSAsset("js/admin.js"),
+                array("jquery"),
                 Plugin::getDefinitions()->getPluginVersion()
             );
         }
 
         wp_enqueue_script(
-            'RRS navigation menu script',
-            urlToRRSAsset('js/menu.js'),
-            array('jquery'),
+            "RRS navigation menu script",
+            urlToRRSAsset("js/menu.js"),
+            array("jquery"),
             Plugin::getDefinitions()->getPluginVersion()
         );
     }

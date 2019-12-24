@@ -4,6 +4,7 @@ namespace RedRock\Subscriptions;
 
 require_once "PluginDefinitions.php";
 require_once "AutoLoader.php";
+require_once "TimeZoneHandler.php";
 
 class Plugin {
     private static $defaultInstance;
@@ -35,15 +36,16 @@ class Plugin {
     
     protected function __construct($pluginFile) {
         $pluginDefinitions = new PluginDefinitions($pluginFile);
+        
+        $timeZoneHandler = new TimeZoneHandler;
+        $timeZoneHandler->handlePluginInitiation();
+        
         $autoLoader = new AutoLoader;
         $audoLoader->hookAutoLoader();
         
         $serviceSuite = new ServiceSuite;
         $rootServiceSpawner = new RootServiceSpawner($serviceSuite);
     }
-    
-    private function __clone() {}
-    private function __wakeup() {}
     
     public function run() {
         $rootServiceSpawner->spawnServices();

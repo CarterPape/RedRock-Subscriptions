@@ -2,6 +2,9 @@
 
 namespace RedRock\Subscriptions;
 
+// Want to understand the logic tree in this class? Look here:
+// https://drive.google.com/file/d/1OArtCEylOLJ4nt66bqpZbhN9bLZ0Om-i/view?usp=sharing
+
 class AccessContextResolver {
     private $contentAccessContext       = null;
     private $contentViewFactory         = null;
@@ -11,9 +14,9 @@ class AccessContextResolver {
     private $cookieTestService          = null;
     
     public function __construct(
-        &$contentAccessContext,
-        &$contentViewFactory,
-        $filterPredicateList
+        ContentAccessContext &$contentAccessContext,
+        ProtectedContentViewFactory &$contentViewFactory,
+        array $filterPredicateList
     ) {
         $this->contentAccessContext = $contentAccessContext;
         $this->contentViewFactory   = $contentViewFactory;
@@ -113,7 +116,7 @@ class AccessContextResolver {
         $linkingError = null;
         
         $subscriberAccountsManager->attemptToLinkWPAccountToSubServ(
-            $contentAccessContext->currentUser,
+            $contentAccessContext->requester,
             $linkingError
         );
         
@@ -234,10 +237,12 @@ class AccessContextResolver {
         if (
             $contentAccessContext->getExistingCookieStatus()
                 === ContentAccessContext::kUserHasAnyCookie
-            && $quotaTrackingService->requesterIsBelowQuota()
+            && $quotaTrackingService->requesterIsBelowFreeReadQuota()
             
         ) {
-            $quotaTrackingService->incrementRequestersReadCount();
+            $quotaTrackingService
+                ->conservativelyIncrementRequesterFreeReadCount();
+            
             $contentViewFactory->setContentToBeUnabridged();
             $contentViewFactory->enableQuotaMessage();
         }
@@ -249,17 +254,8 @@ class AccessContextResolver {
             $contentViewFactory->enableMessageAboutUserBeingUnidentifiable();
         }
         else {
-            // This is the case where the user has cookies enabled, they already hit their quota for the month, and there was no filter predicate triggered, so the content is blocked for them and they are presented with the abridged content and paywall.
+            // This is the case where the user has cookies enabled, they already hit their quota for the month, and there was no filter predicate triggered, so the content is blocked for them and they are presented with the abridged content (i.e. hit with the paywall).
             handleUserWithCookiesWhoAlreadyHitQuota();
-        }
-    }
-    
-    private function setContentVisibilty($showFullContent) {
-        if ($showFullContent) {
-            $contentViewFactory->setContentToBeUnabridged();
-        }
-        else {
-            $contentViewFactory->setContentToBeAbridged();
         }
     }
     
