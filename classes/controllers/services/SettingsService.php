@@ -37,7 +37,7 @@ class SettingsService extends DependentService {
         add_options_page(
             $settingsPageDisplayName,
             $settingsPageDisplayName,
-            'manage_options',
+            "manage_options",
             $settingsPageSlug,
             array($settingsViewController, "renderView")
         );
@@ -73,23 +73,23 @@ class SettingsService extends DependentService {
      * Displays the page for registering the WordPress plugin with memberful.com
      */
     function memberful_wp_register() {
-        if (isset($_POST['activation_code'])) {
-            if (! empty($_POST['activation_code'])) {
-                $activation = memberful_wp_activate($_POST['activation_code']);
+        if (isset($_POST["activation_code"])) {
+            if (! empty($_POST["activation_code"])) {
+                $activation = memberful_wp_activate($_POST["activation_code"]);
 
                 if ($activation === TRUE) {
-                    update_option('memberful_embed_enabled', TRUE);
+                    update_option("memberful_embed_enabled", TRUE);
                     memberful_wp_sync_downloads();
                     memberful_wp_sync_subscription_plans();
                 }
                 else {
-                    Reporter::report($activation, 'error');
+                    Reporter::report($activation, "error");
                 }
             }
 
-            return wp_redirect(admin_url('options-general.php?page=memberful_options'));
+            return wp_redirect(admin_url("options-general.php?page=memberful_options"));
         }
 
-        memberful_wp_render('setup');
+        memberful_wp_render("setup");
     }
 }
