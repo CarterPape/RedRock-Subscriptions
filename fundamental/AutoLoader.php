@@ -25,7 +25,7 @@ class AutoLoader {
     }
     
     private function loadRecursivelyFromDirectory($dir) {
-        $thePossibleTarget = $dir . $classShortName . ".php";
+        $thePossibleTarget = $dir . $currentClassShortname . ".php";
         
         if (file_exists($thePossibleTarget)) {
             include $thePossibleTarget;

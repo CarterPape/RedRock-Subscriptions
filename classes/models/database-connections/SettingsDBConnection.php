@@ -17,7 +17,7 @@ class SettingsDBConnection extends DBConnection {
             "RRS_role_for_active_customers"     => "subscriber",
             "RRS_role_for_inactive_customers"   => "subscriber",
             "RRS_default_marketing_content"     => NULL,
-            "RRS_universal_free_reads_quota"    => 3
+            "RRS_universal_free_reads_quota"    => 3,
         );
     }
     
@@ -26,7 +26,7 @@ class SettingsDBConnection extends DBConnection {
             "RRS_memberful_client_id",
             "RRS_memberful_client_secret",
             "RRS_memberful_api_key",
-            "RRS_memberful_webhook_secret"
+            "RRS_memberful_webhook_secret",
         );
     }
     

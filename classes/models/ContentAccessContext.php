@@ -68,7 +68,7 @@ class ContentAccessContext {
     public const kRequesterAlreadyLinkedToSubServ   = 0x30;
     public const kNoExistingSubServLinkForRequester = 0x31;
     
-    public function checkForExistingSubServLinkage() {
+    public function checkWhetherRequesterHasSubServLinkage() {
         if ($subServLinkageStatus === null) {
             checkForExistingSubServLinkageCore();
         }
@@ -76,7 +76,7 @@ class ContentAccessContext {
         return $subServLinkageStatus;
     }
     
-    private function checkForExistingSubServLinkageCore() {
+    private function checkWhetherRequesterHasSubServLinkageCore() {
         
     }
     

@@ -77,7 +77,7 @@ class AccessContextResolver {
     }
     
     private function handleUserLoggedIntoWP() {
-        switch ($contentAccessContext->checkForExistingSubServLinkage()) {
+        switch ($contentAccessContext->checkWhetherRequesterHasSubServLinkage()) {
             case (ContentAccessContext::kRequesterAlreadyLinkedToSubServ):
                 handleUserWithSubServLinkage();
             break;
